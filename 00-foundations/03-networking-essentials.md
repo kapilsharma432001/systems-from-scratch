@@ -37,7 +37,6 @@ At this layer, we have TCP, UDP etc. which provide end-to-end communication serv
 - Layer 7: Application Layer
 At the final layer we have application protocols like DNS, HTTP, Websockets, WebRTC. These are common protocols that build on top of TCP (or UDP, in case of WebRTC) to provide a layer of abstraction for different type of data typically associated with web applications.
 
-## Protocols (How communication happens)
 
 ## Request Flow in a Real System
 
@@ -91,6 +90,7 @@ First, it may check the cache. If the data is found there, it is a cache hit. If
 7. The response goes back to the user.
 
 
+## Network Layer Protocols
 
 
 
