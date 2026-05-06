@@ -91,6 +91,47 @@ First, it may check the cache. If the data is found there, it is a cache hit. If
 
 
 ## Network Layer Protocols
+Network layer protocols are responsible for moving packets from one machine to another across networks.
+In the OSI model, this is layer 3.
 
+When a request is sent from a machine, it moves through the layers like this:
 
+```text
+Application layer: HTTP request / app data
+        |
+Transport layer: TCP / UDP
+        |
+Network layer: IP
+        |
+Data link layer: Ethernet / Wi-Fi
+        |
+Physical layer: cables / radio signals
+```
 
+### The Network Layer Answers
+
+- Where should this packet go?
+- Which path should it take?
+- How do we identify the destination machine?
+
+This layer is dominated by the IP protocol, which is responsible for routing and addressing.
+
+### IP (Internet Protocol)
+
+IP is the most important network layer protocol. IP provides addressing and routing.
+
+Example IP addresses:
+
+- IPv4: `192.168.1.10`
+- IPv6: `2001:db8::1`
+
+When your browser sends a request, IP helps deliver the request from your device to the server.
+
+Example path:
+
+```text
+Your laptop -> Router -> ISP -> Internet -> Server
+```
+
+IP does not guarantee delivery. It provides best-effort delivery.
+This is why TCP exists above IP to provide reliability.
