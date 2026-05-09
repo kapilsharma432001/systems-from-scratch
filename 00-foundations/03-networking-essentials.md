@@ -167,7 +167,7 @@ System design insight: ICMP is useful for debugging network reachability, but pr
 ## Transport Layer Protocols
 - The transport layer is where we establish a end-to-end communication between applications and it sits between network layer and application layer. Its job is to move the data between two processed running on different machines.
 - For example, client IP is 10.0.0.5 and port is 53000, then the IP address identifies the machine and port identifies the application running on that machine.
-- The three primary protocols at this layer are TCP, UPP and QUIC.
+- The three primary protocols at this layer are TCP, UDP and QUIC.
 - For most of the system design interviews, the real choice is between TCP and UDP. QUIC is a new protocol that provides same benefits of TCP with some modernization and performance benefits.
 
 ### TCP
@@ -191,3 +191,24 @@ TCP tradeoffs:
 - TCP gives reliability, but it adds extra overhead because of connection setup and acknowledgements.
 - TCP guarantees ordering, but one slow or lost packet can delay later packets (if one packet is lost - then other packets may have to wait until this lost packet is transmitted)
 - TCP is great for correctness, but it may be slower than UDP for real-time systems like gaming, live video or voice calls.
+
+### UDP
+- UDP stands for 'User Datagram Protocol'.
+- It is used when you care more about speed and low latency than guaranteed delivery.
+- UDP does not create a connection before sending the data.
+- UDP does not guarantee reliability, ordering or complete delivery.
+- If a packet is lost, UDP does not automatically retransmit it.
+
+- Examples: DNS, Video Streaming, Gaming, Voice Calls, WebRTC etc
+- In system design, UDP is used when losing some data is better than waiting too long.
+- Example: In a live video call, it is better to drop one frame than pause the whole call.
+
+UDP tradeoffs:
+- UDP is faster than TCP because it has less overhead.
+- UDP is good for real-time systems, but the application may need to handle missing or out-of-order packets.
+- UDP is not a good choice when correctness is very important, like payments, databases or normal backend APIs.
+
+### QUIC
+- QUIC is a newer transport protocol built on top of UDP.
+- It is used by HTTP/3 and gives TCP-like reliability with better performance in many cases.
+- In system design, you can think of QUIC as a modern protocol used to reduce connection setup time and improve performance on unreliable networks.
