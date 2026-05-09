@@ -91,7 +91,7 @@ First, it may check the cache. If the data is found there, it is a cache hit. If
 
 
 ## Network Layer Protocols
-Network layer protocols are responsible for moving packets from one machine to another across networks.
+Network layer protocols are responsible for moving packets from one machine to another across networks (routing and addressing is the responsibility of network layer).
 In the OSI model, this is layer 3.
 
 When a request is sent from a machine, it moves through the layers like this:
