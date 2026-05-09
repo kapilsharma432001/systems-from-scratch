@@ -141,7 +141,7 @@ WebSocket tradeoffs:
 
 ## WebRTC
 
-- WebRTC is used for real-time peer-to-peer communication.
+- WebRTC (Web Real Time Communication) is used for real-time peer-to-peer communication.
 - It is commonly used for audio calls, video calls and screen sharing.
 - WebRTC often uses UDP because low latency is more important than perfect delivery.
 
