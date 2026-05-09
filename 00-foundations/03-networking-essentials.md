@@ -73,7 +73,7 @@ Many servers use a CDN (Content Delivery Network). A CDN stores static content c
 - JavaScript files
 - Static HTML
 
-![CDN](image-2.png)
+![CDN & Load Balancer](image-3.png)
 
 5. Dynamic requests reach the load balancer.
 
