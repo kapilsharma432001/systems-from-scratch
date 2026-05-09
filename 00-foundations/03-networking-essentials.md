@@ -162,3 +162,32 @@ ICMP is not used to send application data like HTTP requests.
 It helps network devices report problems, such as unreachable hosts or expired packets.
 
 System design insight: ICMP is useful for debugging network reachability, but production systems usually rely on application-level health checks for service availability.
+
+
+## Transport Layer Protocols
+- The transport layer is where we establish a end-to-end communication between applications and it sits between network layer and application layer. Its job is to move the data between two processed running on different machines.
+- For example, client IP is 10.0.0.5 and port is 53000, then the IP address identifies the machine and port identifies the application running on that machine.
+- The three primary protocols at this layer are TCP, UPP and QUIC.
+- For most of the system design interviews, the real choice is between TCP and UDP. QUIC is a new protocol that provides same benefits of TCP with some modernization and performance benefits.
+
+### TCP
+- TCP stands for 'Transmission Control Protocol'.
+- It is used when you care about: Reliability, Ordering, Correctness and Complete delivery.
+- TCP creates a connection before sending the data:-
+```text
+client -> server: SYN (synchronization)
+server -> client: SYN-ACK (synchronization + acknowledgement)
+client -> server: ACK (acknowledgement)
+```
+
+![TCP](image-4.png)
+
+- Most normal backend systems use TCP.
+- Examples: HTTPS, REST APIs, Websockets, Databases, SSH, Email, Payment Systems, Message Queues etc
+- In system design, almost most APIs are using HTTP/HTTPS over TCP.
+- Example: Mobile App -> Load Balancer -> Backend API -> Database (this is always TCP)
+
+TCP tradeoffs:
+- TCP gives reliability, but it adds extra overhead because of connection setup and acknowledgements.
+- TCP guarantees ordering, but one slow or lost packet can delay later packets (if one packet is lost - then other packets may have to wait until this lost packet is transmitted)
+- TCP is great for correctness, but it may be slower than UDP for real-time systems like gaming, live video or voice calls.
