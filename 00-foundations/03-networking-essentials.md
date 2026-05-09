@@ -135,3 +135,30 @@ Your laptop -> Router -> ISP -> Internet -> Server
 
 IP does not guarantee delivery. It provides best-effort delivery.
 This is why TCP exists above IP to provide reliability.
+
+### IPv4 vs IPv6
+
+#### IPv4
+- IPv4 is older and very common.
+- Example: 142.250.190.78
+- IPv4 has limited address space, so we use things like NAT
+- NAT helps by letting many private devices share one public address.
+
+#### IPv6
+- Newer version with much larger address space.
+- IPv6 was created because internet needed more addresses.
+
+### ICMP (Internet Control Message Protocol)
+
+ICMP is another important network layer protocol.
+It is mainly used for network diagnostics and error reporting.
+
+Common examples:
+
+- `ping` uses ICMP to check if a machine is reachable.
+- `traceroute` uses ICMP-like behavior to show the path packets take through the network.
+
+ICMP is not used to send application data like HTTP requests.
+It helps network devices report problems, such as unreachable hosts or expired packets.
+
+System design insight: ICMP is useful for debugging network reachability, but production systems usually rely on application-level health checks for service availability.
