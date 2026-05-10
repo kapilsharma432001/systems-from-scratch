@@ -54,5 +54,7 @@ systems-from-scratch/
 ├── 00-foundations/
 │   ├── 01-what-is-system-design.md
 │   ├── 02-core-concepts.md
-│   └── 03-networking-essentials.md
+│   ├── 03-networking-essentials.md
+│   ├── 04-application-layer-protocols.md
+│   └── 05-load-balancing.md
 ```
