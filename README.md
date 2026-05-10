@@ -56,5 +56,6 @@ systems-from-scratch/
 │   ├── 02-core-concepts.md
 │   ├── 03-networking-essentials.md
 │   ├── 04-application-layer-protocols.md
-│   └── 05-load-balancing.md
+│   ├── 05-load-balancing.md
+│   └── 06-common-deep-dives-and-challanges.md
 ```
