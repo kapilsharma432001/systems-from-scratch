@@ -16,3 +16,11 @@
 - Each region has its own servers, caches and databases.
 - Regional paritioning improves: latency, scalability, fault isolation, local compliance.
 - But it makes these harder: cross-region consistency, global search, user migration between regions etc.
+
+## Timeouts
+- A timeout means - I will wait only this long for a response. After that, I stop waiting.
+- Without timeouts, one slow dependency can make your system hang forever.
+
+![timeouts](image-6.png)
+
+- AWS builder library recommends setting timeouts for remote calls, including connection timeouts and request timeouts, because waiting too long consumes resources, while setting timeouts too low can cause un-ncessary retries and backend loads.
