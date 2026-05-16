@@ -30,3 +30,31 @@
 
 
 ![Indexes](image-1.png)
+
+#### Most common relational databases are Postgres and MySQL. Pick 'Postgres' in most of the answers.
+
+TODO: WE NEED TO LEARN ABOUT SQL QUERIES, ALL TYPES OF JOINS IN DEEP
+
+### NoSQL Databases
+- A NoSQL database is a datbase that stores the data in a flexible way, not strictly in tables like traditional SQL databases.
+- It is designed to accomodate a wide range of data models, including key-value, document, column-family and graph formats.
+- Often schema less.
+- This flexibility allows NoSQL databases to handle large volumes of unstructured, semi-structured, or structured data, and to scale horizontally with ease.
+
+
+![NoSQL Databases](image-2.png)
+
+#### Use NoSQL database in these conditions - NoSQL databases are strong candidates of situations where-
+- **Flexible Data Models -** Your data model is evolving or you need to store different types of data structure without a fixed schema
+- **Scalability -** Your application needs to scale horizontally (across many servers) to accomodate large amounts of data or high user loads.
+- **Handling Big Data and Real-Time Web Apps -** You have applications dealing with large volumes of data, especially unstructured data or applications requiring real-time data processing and analytics.
+
+![NoSQL Database Guideline](image-3.png)
+
+#### Things to know about NoSQL Databases
+- **1. Data Models** - NoSQL databases come in many different flavours, each with its own data model. The most common types of NoSQL databases are key-value stores, document stores, column-family stores and graph databases.
+- **2. Indexes** - Like SQL databases (relational databases), NoSQL databases support indexing to make data faster to query. The most common types of indexes are B-Tree and Hash-Table indexes.
+- **3. Scalability** - NoSQL databases scale horizontally by using **consistent hashing (important concept)** and/or **sharding (important concept)** to distribute data across many servers.
+
+#### Most common NoSQL databases
+- DynamoDB, Cassandra, and MongoDB
