@@ -60,4 +60,11 @@ systems-from-scratch/
 │   └── 06-common-deep-dives-and-challanges.md
 │
 └── 01-key-technologies/
+    ├── 01-key-techs.md
+    ├── 02-blob-storage.md
+    ├── 03-search-optimized-database.md
+    ├── 04-api-gateway.md
+    ├── 05-queues.md
+    ├── 06-load-balancer.md
+    └── 07-steams-or-event-sourcing.md
 ```
