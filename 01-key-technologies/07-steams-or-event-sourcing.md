@@ -58,3 +58,5 @@ Good examples:
 - When history matters as much as the final state.
 
 ![Streams and Event Sourcing](image-12.png)
+
+### Common streaming technologies are Kafka, Flink, Kinesis etc
