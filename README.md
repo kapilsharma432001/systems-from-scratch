@@ -48,8 +48,7 @@ Each note should answer:
 systems-from-scratch/
 │
 ├── README.md
-├── ROADMAP.md
-├── REVISION_TRACKER.md
+├── LICENSE
 │
 ├── 00-foundations/
 │   ├── 01-what-is-system-design.md
@@ -59,12 +58,57 @@ systems-from-scratch/
 │   ├── 05-load-balancing.md
 │   └── 06-common-deep-dives-and-challanges.md
 │
-└── 01-key-technologies/
-    ├── 01-key-techs.md
-    ├── 02-blob-storage.md
-    ├── 03-search-optimized-database.md
-    ├── 04-api-gateway.md
-    ├── 05-queues.md
-    ├── 06-load-balancer.md
-    └── 07-steams-or-event-sourcing.md
+├── 01-key-technologies/
+│   ├── 01-key-techs.md
+│   ├── 02-blob-storage.md
+│   ├── 03-search-optimized-database.md
+│   ├── 04-api-gateway.md
+│   ├── 05-queues.md
+│   ├── 06-load-balancer.md
+│   ├── 07-steams-or-event-sourcing.md
+│   ├── 08-distributed-lock.md
+│   ├── 09-distributed-cache.md
+│   └── 10-CDN.md
+│
+├── 02-core-concepts/
+│   └── README.md
+│
+└── 03-Common-Patterns/
+    └── README.md
 ```
+
+Image files inside the topic folders are supporting diagrams for the notes.
+
+---
+
+## Current Topics
+
+### 00 - Foundations
+
+- [What is System Design?](00-foundations/01-what-is-system-design.md)
+- [Core Concepts](00-foundations/02-core-concepts.md)
+- [Networking Essentials](00-foundations/03-networking-essentials.md)
+- [Application Layer Protocols](00-foundations/04-application-layer-protocols.md)
+- [Load Balancing](00-foundations/05-load-balancing.md)
+- [Common Deep Dives and Challenges](00-foundations/06-common-deep-dives-and-challanges.md)
+
+### 01 - Key Technologies
+
+- [Key Technologies](01-key-technologies/01-key-techs.md)
+- [Blob Storage](01-key-technologies/02-blob-storage.md)
+- [Search-Optimized Database](01-key-technologies/03-search-optimized-database.md)
+- [API Gateway](01-key-technologies/04-api-gateway.md)
+- [Queues](01-key-technologies/05-queues.md)
+- [Load Balancer](01-key-technologies/06-load-balancer.md)
+- [Streams or Event Sourcing](01-key-technologies/07-steams-or-event-sourcing.md)
+- [Distributed Lock](01-key-technologies/08-distributed-lock.md)
+- [Distributed Cache](01-key-technologies/09-distributed-cache.md)
+- [CDN](01-key-technologies/10-CDN.md)
+
+### 02 - Core Concepts
+
+- [Core Concepts](02-core-concepts/README.md)
+
+### 03 - Common Patterns
+
+- [Common Patterns](03-Common-Patterns/README.md)
