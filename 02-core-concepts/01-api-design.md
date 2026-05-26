@@ -41,9 +41,9 @@
    - `PUT`: Updates or replaces a resource. `PUT` is idempotent, which means if you make the same request again and again, it should update the same resource instead of creating a new one.
    - `DELETE`: Deletes a resource.
 
-#### REST for CRUD operations
+   REST for CRUD operations:
 
-For standard CRUD operations, REST maps naturally to your database operations and HTTP semantics, making it the go-to protocol for most web services.
+   For standard CRUD operations, REST maps naturally to your database operations and HTTP semantics, making it the go-to protocol for most web services.
 
 2. **GraphQL:**
    - GraphQL is a query language for APIs.
@@ -86,5 +86,9 @@ For standard CRUD operations, REST maps naturally to your database operations an
    ```
 
 3. **RPC (Remote Procedure Call):**
-    - RPC protocols like gRPC uses binary serialization and HTTP/2 for effiecient communication between services.
-    - RPC shines in microservice architectures where services needs to communicate frequently and effieciently.
+   - RPC protocols like gRPC use binary serialization and HTTP/2 for efficient communication between services.
+   - RPC shines in microservice architectures where services need to communicate frequently and efficiently.
+   - RPC lets one service call another service using methods like `getUser()` or `chargePayment()`.
+   - If the interviewer mentions internal service communication, high-performance requirements, or polyglot environments (different services in different languages), RPC is likely a good choice.
+   - Binary serialization and HTTP/2 make RPC significantly faster than JSON-based REST in many internal service-to-service use cases.
+   - For a Ticketmaster example, you may use REST APIs for public endpoints that mobile apps and web clients consume, but use gRPC for internal communication between your booking service, payment service, and inventory service.
