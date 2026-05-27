@@ -195,3 +195,5 @@ Used in:
 - Twitter/X timeline.
 - Chat messages.
 - Order history.
+
+#### In the interviews offset pagination is generally fine - unless you are dealing with real-time data or the interviewer specifically ask you to deal with large volume of data.
