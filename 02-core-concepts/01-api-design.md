@@ -196,4 +196,16 @@ Used in:
 - Chat messages.
 - Order history.
 
-#### In the interviews offset pagination is generally fine - unless you are dealing with real-time data or the interviewer specifically ask you to deal with large volume of data.
+#### Interview note
+
+In interviews, offset pagination is generally fine unless you are dealing with real-time data or the interviewer specifically asks you to handle a large volume of data.
+
+### Versioning Strategies
+
+- APIs evolve over time, and you need a strategy for handling changes without breaking existing clients.
+- The most common approach is **URL versioning**, where you include the version number in the path, such as `/v1/events` or `/v2/events`.
+  - Most common approach.
+  - Simple to implement.
+  - Clients know exactly which version they are using by looking at the URL.
+
+- **Header versioning:** Header versioning puts the version in the HTTP header instead, such as `Accept-Version: v2` or `API-Version: 2`. This keeps URLs cleaner and follows HTTP standards better, but it is less obvious to developers and harder to test in the browser.
