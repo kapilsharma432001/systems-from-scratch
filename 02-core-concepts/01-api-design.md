@@ -343,3 +343,22 @@ We need rate limiting because there could be:
 
 - Fixed window
 - Sliding window
+
+### Session-Based Authentication vs Token-Based Authentication
+
+#### Core difference
+
+- Session-based authentication stores login state on the server.
+- Token-based authentication stores login state mostly in the client token.
+
+- In **session-based authentication**, after verifying credentials, the server sends a session ID to the browser. The browser stores that session ID in a cookie and sends that cookie with every request.
+  - The server looks up the session ID and decides whether the user is authenticated.
+  - Basically, the server stores the login state.
+
+- In **token-based authentication**, after verifying credentials, the server sends a token back to the client. For every future request, the client sends that token to the server.
+  - The client stores the token and sends it with every request.
+  - The server verifies the token signature and serves the request.
+
+#### The real difference
+
+You can store a session ID in a cookie, and you can also store a JWT in a cookie. The real difference is that in session-based authentication, the server stores the authentication state. In token-based authentication, the token carries the authentication state.
