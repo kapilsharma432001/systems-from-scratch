@@ -254,33 +254,92 @@ Authorization: Api-Key abc123
 - When a user logs in successfully, your server creates a JWT containing the user ID, permissions, and an expiration time, then signs the entire token with a secret key.
 - When that JWT comes back with future requests, you can verify that it is authentic by checking the signature. You can also read the information directly from the token itself without database lookups. The token carries the context you need to authorize the request.
 
-> [!IMPORTANT]
-> JWTs work particularly well for distributed systems because **any service with access to the verification key** can validate tokens independently. If your mobile app sends the JWT to your API gateway, the gateway can verify the user's identity and forward the request to your booking service with confidence.
->
-> Example JWT payload:
->
-> ```json
-> {
->   "user_id": 123,
->   "email_id": "john@example.com",
->   "role": "customer",
->   "expiration_time": 1640495300
-> }
-> ```
->
-> The JWT secret key is stored on the server side, never inside the JWT, and never sent to the client.
->
-> Store the secret key in a safe place, such as `.env`, environment variables, AWS Secrets Manager, HashiCorp Vault, or a CI/CD secret store.
->
-> The secret key is used to sign the JWT token and verify it later. The signature is the third part of the `header.payload.signature` format.
->
-> Example JWT header:
->
-> ```json
-> {
->   "alg": "HS256",
->   "typ": "JWT"
-> }
-> ```
->
-> The payload can contain fields like `name`, `email`, `iat`, and `exp`.
+<table border="1" cellpadding="12" cellspacing="0">
+  <tr>
+    <th align="left">Important</th>
+  </tr>
+  <tr>
+    <td>
+      <p>JWTs work particularly well for distributed systems because <strong>any service with access to the verification key</strong> can validate tokens independently. If your mobile app sends the JWT to your API gateway, the gateway can verify the user's identity and forward the request to your booking service with confidence.</p>
+      <p><strong>Example JWT payload:</strong></p>
+      <pre><code>{
+  "user_id": 123,
+  "email_id": "john@example.com",
+  "role": "customer",
+  "expiration_time": 1640495300
+}</code></pre>
+      <p>The JWT secret key is stored on the server side, never inside the JWT, and never sent to the client.</p>
+      <p>Store the secret key in a safe place, such as <code>.env</code>, environment variables, AWS Secrets Manager, HashiCorp Vault, or a CI/CD secret store.</p>
+      <p>The secret key is used to sign the JWT token and verify it later. The signature is the third part of the <code>header.payload.signature</code> format.</p>
+      <p><strong>Example JWT header:</strong></p>
+      <pre><code>{
+  "alg": "HS256",
+  "typ": "JWT"
+}</code></pre>
+      <p>The payload can contain fields like <code>name</code>, <code>email</code>, <code>iat</code>, and <code>exp</code>.</p>
+    </td>
+  </tr>
+</table>
+
+#### Sign in with Google: How does it work?
+
+- Sign in with Google uses OpenID Connect and OAuth 2.0.
+
+Flow:
+
+1. You click "Sign-in with Google"
+2. ChatGPT sends you to Google.
+3. Google verifies who you are.
+4. Google sends a temporary code back to ChatGPT.
+5. ChatGPT exchanges that code with Google for tokens.
+6. Google returns proof: "This is Kapil. Email verified"
+7. ChatGPT creates/checks your ChatGPT account.
+8. ChatGPT logs you in using its own session.
+
+#### RBAC (Role-Based Access Control)
+
+- Real systems have different types of users with different permissions.
+- For example, in a Ticketmaster-like system such as BookMyShow, `customers` can book tickets and view their bookings, `venue managers` can create events and view sales reports, and `admins` can access everything.
+
+RBAC assigns roles to users and permissions to roles.
+
+Roles:
+
+- Customers: can book tickets and view their own bookings.
+- Venue managers: can create events and view sales for their venues.
+- Admins: can access everything.
+
+Examples:
+
+- User: `johndoe@example.com` -> Role: `customer`
+- User: `manager@example.com` -> Role: `venue_manager`
+
+##### In your API design
+
+You should check both authentication and authorization.
+
+```text
+GET /bookings/{id}
+```
+
+1. Is the user authenticated? Do they have a valid JWT token?
+2. Is the user authorized? Do they own this booking, or are they an admin?
+
+### Rate Limiting and Throttling
+
+- **Rate limiting** means setting a maximum number of requests allowed in a time window.
+- **Throttling** means slowing down or controlling traffic when it exceeds safe limits. It is the act of slowing down, controlling, or delaying requests when usage is too high.
+
+We need rate limiting because there could be:
+
+- Abuse, such as bots, scraping, brute-force login attempts, or DDoS attacks.
+- Backend overload, such as database, cache, payment system, or third-party API overload.
+- Traffic spikes, such as sudden high load from real users.
+
+- **API Gateway** is usually the best default answer for where to put rate limiting.
+- We can rate limit using IP address for unauthenticated users, `user_id`, API key, region, etc.
+
+#### Main rate limiting algorithms
+
+- Fixed window
+- Sliding window
