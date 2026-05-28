@@ -71,7 +71,8 @@ systems-from-scratch/
 │   └── 10-CDN.md
 │
 ├── 02-core-concepts/
-│   └── README.md
+│   ├── README.md
+│   └── 01-api-design.md
 │
 └── 03-Common-Patterns/
     └── README.md
@@ -108,6 +109,7 @@ Image files inside the topic folders are supporting diagrams for the notes.
 ### 02 - Core Concepts
 
 - [Core Concepts](02-core-concepts/README.md)
+- [API Design](02-core-concepts/01-api-design.md)
 
 ### 03 - Common Patterns
 
