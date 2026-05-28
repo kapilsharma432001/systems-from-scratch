@@ -209,3 +209,78 @@ In interviews, offset pagination is generally fine unless you are dealing with r
   - Clients know exactly which version they are using by looking at the URL.
 
 - **Header versioning:** Header versioning puts the version in the HTTP header instead, such as `Accept-Version: v2` or `API-Version: 2`. This keeps URLs cleaner and follows HTTP standards better, but it is less obvious to developers and harder to test in the browser.
+
+### Security Considerations
+
+- Demonstrating security awareness can set you apart in interviews.
+- Understanding basic API security principles signals that you think about production-ready systems.
+
+#### Authentication and Authorization
+
+- **Authentication:** Verifies identity, proving the user is who they claim to be.
+  - Password + session
+  - Password + JWT
+  - OAuth
+  - MFA
+  - API key for machine-to-machine access
+- **Authorization:** Verifies permissions, checking whether the authenticated user is allowed to perform the specific action they are requesting.
+  - RBAC (role-based access control)
+  - ABAC (attribute-based access control)
+  - Policy-based authorization
+
+- **Important design rule:** Authentication happens first. Authorization must happen on every sensitive request.
+
+#### API Keys vs JWT Tokens
+
+##### API Keys
+
+- API keys are long strings used to identify and authenticate a client or service.
+- API keys are usually for service-to-service or developer access.
+
+Example:
+
+```text
+GET /v1/payments
+Authorization: Api-Key abc123
+```
+
+- API keys are long, randomly generated strings that act like passwords for applications rather than humans. When a client makes a request, they include their API key in the `Authorization` header, and your server looks up that key to identify which application is making the request.
+- For example, you may generate an API key to interact with the OpenAI API or Anthropic API.
+- Here is how they work: you generate an API key for each client, such as `sk_live_abc123def...`, and store it in your database along with permissions and rate limits for that client. Then you verify each incoming request by looking up the key.
+
+##### JWT (JSON Web Tokens)
+
+- JWTs encode user information directly into the token itself rather than storing the session state on your server.
+- When a user logs in successfully, your server creates a JWT containing the user ID, permissions, and an expiration time, then signs the entire token with a secret key.
+- When that JWT comes back with future requests, you can verify that it is authentic by checking the signature. You can also read the information directly from the token itself without database lookups. The token carries the context you need to authorize the request.
+
+> [!IMPORTANT]
+> JWTs work particularly well for distributed systems because **any service with access to the verification key** can validate tokens independently. If your mobile app sends the JWT to your API gateway, the gateway can verify the user's identity and forward the request to your booking service with confidence.
+>
+> Example JWT payload:
+>
+> ```json
+> {
+>   "user_id": 123,
+>   "email_id": "john@example.com",
+>   "role": "customer",
+>   "expiration_time": 1640495300
+> }
+> ```
+>
+> The JWT secret key is stored on the server side, never inside the JWT, and never sent to the client.
+>
+> Store the secret key in a safe place, such as `.env`, environment variables, AWS Secrets Manager, HashiCorp Vault, or a CI/CD secret store.
+>
+> The secret key is used to sign the JWT token and verify it later. The signature is the third part of the `header.payload.signature` format.
+>
+> Example JWT header:
+>
+> ```json
+> {
+>   "alg": "HS256",
+>   "typ": "JWT"
+> }
+> ```
+>
+> The payload can contain fields like `name`, `email`, `iat`, and `exp`.
