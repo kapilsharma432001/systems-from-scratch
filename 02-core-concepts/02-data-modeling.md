@@ -55,9 +55,28 @@ likes: user_id (FK -> users.id), post_id (FK -> posts.id)
 Because user_id is a foreign key in posts, a user can have multiple posts. Similarly, because post_id is a foreign key in the comments table, a post can have multiple comments.
 ```
 
-- This shows the core relationships: each post belongs to one user (posts.user_id), each comment belongs to one post and one user, likes connect users to posts.
+- This shows the core relationships: each post belongs to one user (`posts.user_id`), each comment belongs to one post and one user, and likes connect users to posts.
 
-- With entities defined, connect them with relationships:-
-    - One-to-Many (1:N): a user has many posts, a post has many comments.
-    - Many-to-Many (M:N): users like many posts, posts are liked by many users.
-    - One-to-One(1:1): this is very rare in practice but often a sign that two tables should just be merged.
+- With entities defined, connect them with relationships:
+    - One-to-many (1:N): a user has many posts, and a post has many comments.
+    - Many-to-many (M:N): users like many posts, and posts are liked by many users.
+    - One-to-one (1:1): this is very rare in practice and often a sign that two tables should just be merged.
+
+- These relationships are enforced through foreign keys in SQL or by application logic in NoSQL. Foreign keys help ensure referential integrity, meaning they prevent orphaned records like a post referencing a user that does not exist or comments pointing to deleted posts.
+    - However, they come at a cost because the database has to validate each insert or update.
+    - At a very large scale, some companies drop them for write performance and enforce integrity at the application level.
+
+- Finally, layer in constraints like `NOT NULL`, `UNIQUE`, or `CHECK`. These enforce correctness at the database level, such as emails being unique or prices being positive, though they also add write overhead.
+
+### Indexing for Access Patterns
+
+- Indexes are the data structures that help the database find records quickly without scanning every row.
+- Your indexes should directly support your most important queries. For a social media app:
+    - Index on `posts.user_id` to quickly find all posts by a user.
+    - Index on `posts.created_at` to load recent posts chronologically.
+    - Composite index on `(user_id, created_at)` to efficiently load a user's recent posts.
+    - Different index types: B-trees, hash indexes, etc.
+
+- In interviews, connect your indexes directly to the API endpoints. "`GET /users/{id}/posts` needs an index on `posts.user_id`" shows you're thinking about real query performance.
+
+### Normalization and Denormalization
