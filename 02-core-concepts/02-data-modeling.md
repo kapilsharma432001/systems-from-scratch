@@ -89,3 +89,30 @@ likes: user_id (FK -> users.id), post_id (FK -> posts.id)
 ![Normalized Data](image-5.png)
 
 **Rule of thumb:** Normalized data avoids repetition, and denormalized data avoids too many joins.
+
+### Scaling and Sharding
+
+- Sharding means splitting one large dataset into smaller parts called **shards**.
+- Each shard stores only a subset of the data.
+- Example: a `users` table with 100 million users.
+  - Instead of one database with 100 million users, split it across shards:
+    - Shard 1: users 1 to 25 million
+    - Shard 2: users 25 million to 50 million
+    - Shard 3: users 50 million to 75 million
+    - Shard 4: users 75 million to 100 million
+
+- Each shard is usually a separate database or server.
+- Common sharding strategies include **range-based sharding** and **hash-based sharding**. Sharding is covered in more detail in another core concepts file.
+
+### Conclusion
+
+- Data modeling is an important part of system design interviews, but it is usually not the main focus.
+- Your **goal** is to show that you can design a reasonable schema that supports your system's functional requirements, then move on.
+
+#### Interview Checklist
+
+1. Determine which database you will use.
+2. List the columns needed to fulfill the functional requirements for each entity.
+3. Specify primary and foreign keys for each relationship.
+4. Determine which columns need indexing, if any.
+5. Consider whether sharding is necessary. If yes, choose a shard key that matches your main access pattern.
