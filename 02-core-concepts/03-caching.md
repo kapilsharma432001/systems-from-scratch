@@ -68,3 +68,16 @@ Caches have limited memory, so they need a strategy for deciding which entries t
 2. **LFU (Least Frequently Used):** Maintains an access counter for each key and evicts the item accessed least frequently. It works well when certain keys remain consistently popular over time, such as trending videos or top playlists.
 3. **FIFO (First In, First Out):** Evicts the oldest item in the cache based on insertion time. Because it may evict items that are still popular, it is rarely used beyond simple caching layers.
 4. **TTL (Time to Live):** TTL is not an eviction policy by itself. Instead, it sets an expiration time for each key and removes entries after they expire. It is often combined with LRU or LFU to balance freshness and memory usage. A TTL is essential when data must eventually refresh, such as API responses or session tokens.
+
+### Common Caching Problems
+
+1. **Cache Stampede**
+2. **Cache Consistency**
+   - Cache consistency is one of the most commonly discussed problems in system design interviews.
+   - It occurs when the cache and database return different values for the same data.
+   - This is common because applications often read from the cache but write to the database first, creating a window in which the cache returns stale data.
+   - There is no perfect solution, so choose a strategy based on how fresh the data needs to be:
+     - **Invalidate on writes:** Delete the cache entry after updating the database so that it can be repopulated with fresh data.
+     - **Use a short TTL:** Allow slightly stale data to remain temporarily when eventual consistency is acceptable.
+     - **Accept eventual consistency:** For feeds, metrics, and analytics, a short delay is usually acceptable.
+3. **Hot Keys**
