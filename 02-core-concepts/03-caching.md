@@ -48,4 +48,23 @@
 
 ![In-Process Caching](image-7.png)
 
+### Cache Architectures
 
+We will not go deeply into cache architectures here, but the most important one is **cache-aside (lazy loading)**. This is the pattern you should default to in most system design interviews.
+
+**How it works:**
+
+1. The application checks the cache.
+2. If the data is present, the application returns it from the cache.
+3. If the data is absent, the application fetches it from the database, stores it in the cache, and returns it.
+
+![Cache Aside (Lazy Loading)](image-8.png)
+
+### Cache Eviction Policies
+
+Caches have limited memory, so they need a strategy for deciding which entries to remove when they are full. These strategies are called eviction policies.
+
+1. **LRU (Least Recently Used):** Evicts the item that has not been accessed for the longest time. It is the default in many systems because it works well for workloads in which recently used data is likely to be used again.
+2. **LFU (Least Frequently Used):** Maintains an access counter for each key and evicts the item accessed least frequently. It works well when certain keys remain consistently popular over time, such as trending videos or top playlists.
+3. **FIFO (First In, First Out):** Evicts the oldest item in the cache based on insertion time. Because it may evict items that are still popular, it is rarely used beyond simple caching layers.
+4. **TTL (Time to Live):** TTL is not an eviction policy by itself. Instead, it sets an expiration time for each key and removes entries after they expire. It is often combined with LRU or LFU to balance freshness and memory usage. A TTL is essential when data must eventually refresh, such as API responses or session tokens.
