@@ -57,35 +57,123 @@ Core difference: **polling means the client keeps asking**, **SSE means the serv
 >
 > In interviews, quickly recognize the pattern from the requirement, apply the simplest correct architecture, then discuss tradeoffs. For real-time updates, use polling for simple low-scale cases, SSE for one-way updates, and WebSockets for bidirectional real-time communication.
 
-#### 2. Long-running tasks
-- Use this when something can not finish inside a normal API request.
-- For example:-
-    - User uplaods video -> video needs transcoding
-- Bad design:-
-    - POST /upload waits 5 minutes until transcoding completes
+#### 2. Long-Running Tasks
+- Use this when something cannot finish inside a normal API request.
+- For example:
+    - User uploads video -> video needs transcoding
+- Bad design:
+    - `POST /upload` waits 5 minutes until transcoding completes
 
-- Better design:-
+- Better design:
     - API server stores request
-    - Pushes jobs to queue
-    - Returns job_id immediately
+    - Pushes jobs to a queue
+    - Returns `job_id` immediately
     - Worker picks up the job
     - User checks status later
 
-- Simple architecture:-
+- Simple architecture:
     - Client -> API Server -> Queue -> Worker -> DB
 
 > 💡 **Interview insight**
 >
 > If the task takes more than a few seconds, use async processing with a queue and worker pool.
 
-- Examples: Video transcoding, PDF generation, Bulk email sending, Data export, ML processing etc.
+- Examples: video transcoding, PDF generation, bulk email sending, data export, ML processing, etc.
 
 #### 3. Contention Handling
 - Use this when multiple users modify the same resource.
-- Example:-
+- Example:
     - Only 1 concert ticket left.
     - 100 users click “Buy” at the same time.
 
 - Problem: Without protection, you may sell the same ticket twice.
-- Common Solutions:-
-    
+- Common solutions:
+    - Database transactions
+    - Row-level lock
+    - Distributed lock
+    - Queue-based serialization
+
+##### If correctness matters, serialize access to the shared resource.
+- Example answer:
+    - For ticket booking, I would use a DB transaction or lock around seat reservation. Only one request can successfully reserve the seat.
+
+- This is especially useful for Ticketmaster, inventory checkout, auctions, wallet balance, seat booking, etc.
+- Start with database-level approaches before jumping into more complex distributed coordination.
+
+#### 4. Scaling Reads
+- Use this when reads are much higher than writes.
+- Example:
+    - One celebrity posts a photo
+    - Millions of users read it
+    - Only one write, millions of reads
+- Common techniques:
+    - Cache
+    - CDN
+    - Read Replicas
+    - Indexes
+    - Precomputation
+
+##### For read-heavy systems, reduce database hits using cache, replicas, indexes, and precomputed views.
+- Example: Design Instagram Feed
+- Better answer:
+    - Store posts in DB
+    - Cache hot feeds in Redis
+    - Use CDN for images/videos
+    - Use read replicas for read-heavy queries
+
+- Important tradeoffs:
+    - Cache improves speed but introduces invalidation problems
+    - Read replication improves read scale but can have replication lag
+
+- **Interview line: I would scale reads gradually: first indexes, then read replicas, then caching/CDN for hot data.**
+- Read traffic often grows faster than write traffic, and common tools include indexing, denormalization, read replicas, Redis, and CDNs.
+
+#### 5. Scaling Writes
+
+- Use this when one database cannot handle write volume.
+- Example:
+    - Millions of chat messages
+    - High volume metrics
+    - User activity logs
+    - Like events
+    - Payment events
+
+- Common techniques:
+    - Sharding
+    - Batching
+    - Queues
+    - Partitioning
+
+##### Distribute writes using partitioning/sharding and absorb bursts using queues.
+
+- Example: Design logging system
+- Bad design: Every log write directly hits one database
+- Better design: App servers -> Kafka -> consumers -> partitioned storage
+
+- **Choosing a good partition key is critical**
+- Good partition key: `user_id`, `conversation_id`, `merchant_id`, `device_id`
+- Bad partition key: `country`, `status`, `created_date` only
+    - Bad keys can create hot partitions
+
+- **Interview line: To scale writes, I would shard by a high-cardinality key and use queues/batching to smooth write spikes.**
+- Sharding, batching, queues, load shedding, and careful partition-key selection as core write-scaling ideas.
+
+#### Partitioning vs Sharding
+
+| Concept | What it means | Where data lives | Interview use case | Main tradeoff |
+| ------- | ------------- | ---------------- | ------------------ | ------------- |
+| **Partitioning** | Splitting a large dataset into smaller pieces. | Can be inside the same database/server or across multiple servers. | Improve query performance, retention, manageability, or write organization. | You must choose a good partition key and avoid hot partitions. |
+| **Sharding** | Horizontal partitioning across multiple machines/databases. | Data is spread across different database nodes. | Scale writes, storage, and traffic beyond what one database can handle. | Cross-shard queries, joins, transactions, and resharding become harder. |
+
+##### Key interview differences
+
+- **Partitioning is the general idea; sharding is a specific type of partitioning.**
+- Partitioning may happen within one database, while sharding usually means data is split across multiple database servers.
+- Partitioning is often used for performance and data management, for example partitioning logs by date.
+- Sharding is used when one machine or database cannot handle the write volume, storage size, or traffic.
+- For partitioning, talk about partition pruning, retention, and hot partitions.
+- For sharding, talk about shard key choice, uneven load, cross-shard queries, distributed transactions, and resharding.
+
+> 💡 **Interview insight**
+>
+> All sharding is partitioning, but not all partitioning is sharding. In system design interviews, say partitioning helps organize and query large data, while sharding spreads data across machines to scale storage and writes.
