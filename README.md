@@ -76,8 +76,11 @@ systems-from-scratch/
 │   ├── README.md
 │   └── 01-api-design.md
 │
-└── 03-Common-Patterns/
-    └── README.md
+├── 03-Common-Patterns/
+│   └── README.md
+│
+└── 04-design-systems/
+    └── 01-systems-to-learn.md
 ```
 
 Image files inside the topic folders are supporting diagrams for the notes.
@@ -116,3 +119,7 @@ Image files inside the topic folders are supporting diagrams for the notes.
 ### 03 - Common Patterns
 
 - [Common Patterns](03-Common-Patterns/README.md)
+
+### 04 - Design Systems
+
+- [Systems to Learn](04-design-systems/01-systems-to-learn.md)
