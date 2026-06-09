@@ -214,3 +214,58 @@ Core difference: **polling means the client keeps asking**, **SSE means the serv
 > 💡 **Interview insight**
 >
 > Do not route large files through application servers. Upload directly to object storage using presigned URLs, store metadata in a database, and serve downloads through a CDN.
+
+#### 7. Multi-Step Processes
+- Use this when one business flow has multiple dependent steps.
+- Each step may call a different service, and the complete process may take seconds, minutes, or even days.
+- The system must remember the current step and safely handle failures and retries.
+
+- Example: placing an e-commerce order
+    - Place order
+    - Reserve inventory
+    - Process payment
+    - Create shipment
+    - Notify seller
+    - Send confirmation to the customer
+
+- Problems to handle:
+    - What if payment succeeds but shipment creation fails?
+    - What if notification fails?
+    - What if a retry charges the customer twice?
+    - How does the system continue after a service restarts?
+
+- Common approaches:
+    - Saga pattern
+    - State machine
+    - Workflow engine
+    - Event-driven orchestration
+
+- **Track the current state explicitly, and make every step retryable and idempotent.**
+
+##### Example order states
+
+`CREATED -> INVENTORY_RESERVED -> PAID -> SHIPPED -> COMPLETED`
+
+Persist each state change so the process can resume from the last successful step after a failure.
+
+##### Common examples
+
+| Process | Typical steps |
+| ------- | ------------- |
+| **E-commerce checkout** | Create order -> reserve stock -> collect payment -> create shipment -> send confirmation |
+| **Food delivery** | Place order -> restaurant accepts -> prepare food -> assign driver -> deliver order |
+| **Travel booking** | Reserve flight -> reserve hotel -> collect payment -> issue confirmation |
+| **User onboarding** | Create account -> verify email -> verify identity -> set up profile -> activate account |
+| **Payment refund** | Request refund -> validate request -> reverse payment -> update order -> notify customer |
+| **Loan application** | Submit application -> verify documents -> run credit check -> approve or reject -> disburse funds |
+| **Subscription signup** | Create subscription -> collect payment -> enable access -> send receipt |
+
+##### Choosing an approach
+
+- Use a **state machine** when the steps and allowed transitions are clear.
+- Use a **Saga** when multiple services update their own data and failed steps may need compensating actions, such as refunding a payment or releasing inventory.
+- Use a **workflow engine** when the process is long-running, has many branches, or needs built-in retries, timers, and visibility.
+
+> 💡 **Interview insight**
+>
+> I would model the process as a state machine, save every state transition, and make each step idempotent so retries are safe. If a completed step must be undone after a later failure, I would use a Saga with compensating actions.
