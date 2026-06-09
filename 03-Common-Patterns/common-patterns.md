@@ -269,3 +269,36 @@ Persist each state change so the process can resume from the last successful ste
 > 💡 **Interview insight**
 >
 > I would model the process as a state machine, save every state transition, and make each step idempotent so retries are safe. If a completed step must be undone after a later failure, I would use a Saga with compensating actions.
+
+#### 8. Proximity-Based Search
+- Use this when the system needs to find nearby people, places, or resources.
+- Examples:
+    - Find nearby drivers
+    - Find nearby restaurants
+    - Find nearby delivery partners
+    - Find nearby stores
+
+- Naive design:
+    - Scan all drivers and calculate distance
+    - This may work for 1,000 drivers, but not for millions
+
+- Better design:
+    - Use a geospatial index
+    - Divide the map into cells or regions
+    - Search nearby cells first
+
+- Common technology choices include **PostgreSQL with PostGIS**, **Redis geospatial indexes**, and **Elasticsearch geo queries**.
+
+- Example: Design Uber
+- Flow:
+    - Driver location updates -> location index
+    - Rider requests a cab -> query nearby drivers
+    - Rank by distance/ETA
+    - Assign driver
+
+> 💡 **Interview insight**
+>
+> For proximity queries, I would not scan every entity. I would use a geospatial index to reduce the search space, query nearby cells, and rank the results by distance or ETA.
+
+## Pattern Matching
+![Pattern Matching](image-1.png)
