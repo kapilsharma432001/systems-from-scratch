@@ -6,7 +6,7 @@ This repository is my personal system design playbook. The goal is to build stro
 
 Most of the learning material and structure here is inspired by [Hello Interview](https://www.hellointerview.com/). I use it as one of my main references, then rewrite the ideas in my own words as I learn and revise them.
 
-Some examples and screenshots in this repository are used directly from [Hello Interview](https://www.hellointerview.com/) for educational and reference purposes.
+This repo is inspired by Hello Interview, but all notes are written in my own words.
 
 ---
 
@@ -80,7 +80,7 @@ systems-from-scratch/
 │   └── README.md
 │
 └── 04-design-systems/
-    └── 01-systems-to-learn.md
+    └── 00-systems-to-learn.md
 ```
 
 Image files inside the topic folders are supporting diagrams for the notes.

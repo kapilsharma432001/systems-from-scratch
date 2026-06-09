@@ -46,3 +46,9 @@ Here is the order that we are going to follow:
 |    10 | **Web Crawler**                   | Teaches large-scale distributed workers.                             | Queues, deduplication, politeness, robots.txt, scheduling                               |
 |    11 | **Video Streaming / YouTube**     | Do after File Storage. It is advanced.                               | Upload pipeline, transcoding, CDN, adaptive streaming                                   |
 |    12 | **Ride Sharing / Uber**           | Do later. It combines many hard problems.                            | Geospatial indexing, matching, real-time location, queues, state machines               |
+
+
+## Delivery Framework to Follow
+- This is the delivery framework we are going to follow in each and every problem that we are going to take.
+- Requirements -> Core Entities -> API or Interface -> Data flow -> High-Level Design -> Deep Dives
+![Delivery Framework](image.png)
