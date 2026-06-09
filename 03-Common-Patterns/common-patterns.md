@@ -177,3 +177,40 @@ Core difference: **polling means the client keeps asking**, **SSE means the serv
 > 💡 **Interview insight**
 >
 > All sharding is partitioning, but not all partitioning is sharding. In system design interviews, say partitioning helps organize and query large data, while sharding spreads data across machines to scale storage and writes.
+
+#### 6. Handling Large Blobs
+- Use this when users upload or download large files.
+- Large files like videos, images, and documents need special handling in distributed systems.
+- **Instead of routing gigabytes through application servers, use direct client-to-storage transfers with presigned URLs and CDN delivery.**
+
+- **Bad design:** The client uploads a 2 GB file through the application server, making the server a bottleneck.
+- **Better design:**
+    - Client asks API for presigned URL
+    - Client uploads directly to S3/blob storage
+    - Metadata is stored in DB
+    - CDN serves downloads
+
+- The application server generates a temporary, scoped presigned URL that lets the client upload directly to object storage like S3.
+- Downloads are served through a CDN, optionally using signed URLs for access control.
+
+- Key challenges:
+    - Synchronizing database metadata with blob storage
+    - Handling failed or incomplete uploads
+    - Managing the lifecycle of large files
+    - Processing storage event notifications to keep application state consistent
+
+![Storing data in large blobs like S3](image.png)
+
+- **Example: Design YouTube Upload**
+    - Client <--> API: request upload URL
+    - API -> Client: return presigned URL
+    - Client <--> S3: uploads video directly
+    - S3 event -> queue -> worker transcodes video
+    - Metadata -> DB
+    - Video served via CDN
+
+- Application servers should only handle metadata and authorization, not stream huge files themselves.
+
+> 💡 **Interview insight**
+>
+> Do not route large files through application servers. Upload directly to object storage using presigned URLs, store metadata in a database, and serve downloads through a CDN.
