@@ -74,3 +74,35 @@ GET /{short_code}
 ```
 
 - We can actually return 301 or 302 code from the URL, but 302 allows us to have more control because the browser does not permanently cache the URL. However, if we return 301, browser can cache the URL and then we won't have control if link expires, gets deleted or needs analytics tracking.
+
+> Bonus: the database schema could look like this.
+
+- We can have a table called `url_mappings` with columns like `short_code`, `long_url`, `is_active`, `user_id`, `created_at`, and `expires_at`.
+
+![DATABASE SCHEMA OF SHORT URL](image-2.png)
+
+### 5. High-Level Design
+
+- **Go one by one through the functional requirements and design a single system to satisfy them.**
+
+#### 1) Users should be able to submit a long URL and receive a short URL
+
+- In a URL shortener, the main algorithmic question is: how do we generate a short code that is unique, small, and fast to create?
+- We usually do not directly convert the long URL into a short URL. We first generate the short code, store it in a database, and map it to the long URL.
+
+![example of short code generation](image-3.png)
+
+```text
+long_url
+   |
+   v
+generate unique short_code
+   |
+   v
+store short_code -> long_url
+   |
+   v
+return https://short.ly/{short_code}
+```
+
+#### 2) Users should be able to access the long URL (original URL) by using the shortened URL
