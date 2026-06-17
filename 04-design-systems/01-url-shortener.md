@@ -105,4 +105,39 @@ store short_code -> long_url
 return https://short.ly/{short_code}
 ```
 
+##### Best simple approach: Unique ID + Base62 encoding
+
+###### Step 1: Generate a unique numeric ID
+
+- We can generate a unique number using a database auto-increment ID, database sequence, or Redis atomic counter.
+- Example: `10000001`, `10000002`, `10000003`, and so on. Every number is unique.
+
+###### Step 2: Convert the number into Base62
+
+- Base62 uses:
+  - `0-9`: 10 characters
+  - `a-z`: 26 characters
+  - `A-Z`: 26 characters
+- Total: 62 characters, so instead of using only digits, we use 62 possible characters.
+- This helps make the short code shorter.
+- Why Base62? Because it gives many combinations with fewer characters.
+
+![Why Base62?](image-4.png)
+
+- The flow would be to generate a unique number using a Redis atomic counter, database auto-increment ID, database sequence, etc., and then run `base62(unique_id)`. This gives us a unique short code.
+- This makes sure that two records cannot have the same short code.
+
+**But then what about custom aliases?**
+
+- Sometimes a user may want `https://short.ly/kapil`.
+- In this case, the system does not generate the code.
+- Instead:
+  - Check if `kapil` already exists.
+  - If it exists, reject the request.
+  - If it does not exist, store it as a mapping with the long URL.
+
+**Why not hash the long URL?**
+
+- Hashing long URLs can lead to collisions.
+
 #### 2) Users should be able to access the long URL (original URL) by using the shortened URL
