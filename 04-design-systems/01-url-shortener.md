@@ -141,3 +141,36 @@ return https://short.ly/{short_code}
 - Hashing long URLs can lead to collisions.
 
 #### 2) Users should be able to access the long URL (original URL) by using the shortened URL
+
+- Now our short URL is live, and users can access the original URL by using the shortened URL.
+- Importantly, the short URL exists at a domain we own. For example, if our site is located at `short.ly`, then our short URLs look like `short.ly/abc123`, and all requests to that short URL go to our primary server.
+
+![Redirect to original URL](image-5.png)
+
+- There are two types of requests to our server:
+  1. `POST /urls`: Generates a short URL.
+  2. `GET /{short_code}`: Looks up the original URL in the database.
+- When a user accesses a shortened URL, the following process occurs:
+  1. The user's browser sends a GET request to our server with the short code (`GET /abc123`).
+  2. Our primary server receives this request and looks up the short code in the database.
+  3. If the short code is found and has not expired, the server retrieves the corresponding long URL. For expired URLs, return a `410 Gone` status.
+  4. The server sends an HTTP redirect response to the user's browser, instructing it to navigate to the original long URL.
+
+### Potential Deep Dives
+
+#### 1. How can we ensure short URLs are unique?
+
+- A good solution is to use a unique counter with Base62 encoding.
+- One way to guarantee that there are no collisions is to increment a counter for each new URL. We can take the output of the counter and encode it using Base62 encoding to make it compact.
+- **Redis is particularly well-suited for managing this counter because it is single-threaded and supports atomic operations. An atomic operation either completes entirely or does not complete at all. Because Redis is single-threaded, it processes one command at a time, eliminating race conditions. Its `INCR` command atomically increments the counter and returns the new value in a single operation.**
+
+![Counter with Base62 encoding](image-6.png)
+
+#### 2. How can we ensure that redirects are fast?
+
+- Implement an in-memory cache, such as Redis or Memcached.
+- We can introduce an in-memory cache between the application server and the database.
+- The cache stores frequently accessed mappings of short codes to long URLs.
+- When a redirect request comes in, the server checks the cache first. If the short code is found in the cache, the server retrieves the long URL from the cache, significantly reducing latency. If it is not found (cache miss), the server queries the database and stores the result in the cache for future requests.
+
+![In-memory cache](image-7.png)
