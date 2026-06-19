@@ -174,3 +174,22 @@ return https://short.ly/{short_code}
 - When a redirect request comes in, the server checks the cache first. If the short code is found in the cache, the server retrieves the long URL from the cache, significantly reducing latency. If it is not found (cache miss), the server queries the database and stores the result in the cache for future requests.
 
 ![In-memory cache](image-7.png)
+
+#### 3. How can we scale to support 1B shortened URLs and 100M DAU?
+
+- We've already done a lot of work to scale. We introduced a caching layer, which helps with read scalability. Now let's talk a bit about scaling writes.
+- We'll start by looking at the size of our database.
+- Each row in our database consists of a short code (~8 bytes), long URL (~100 bytes), optional custom alias (~100 bytes), creation date (~8 bytes), and expiration date (~8 bytes). This totals around 224 bytes of data. We can round it up to **~500 bytes of data**.
+- If we have 1B rows, that means **500 bytes * 1B = 500GB of data**.
+- This is well within the capabilities of modern SSDs. If the number grows more, we can shard our data across multiple servers. For 1B rows, a single Postgres instance should be enough.
+
+**What if the database goes down?**
+
+- If the database goes down, we can use **database replication**. This creates multiple identical copies of our database on different servers. It adds some complexity because we now have to ensure that our primary server can interact with any replica without issues.
+- **Database backup** is also an option. A backup system periodically takes a snapshot of our database and stores it in a separate location. This also adds some complexity because we need to ensure that the primary server can interact with the backup without issues.
+
+###### In this system, reads are going to be much more frequent than writes, so we can scale our primary server by separating the read and write operations
+
+- This introduces a microservices architecture where the Read Service handles redirects while the Write Service handles the creation of new short URLs. This separation allows us to scale each service independently based on its specific demands.
+
+![Final Design](image-8.png)
