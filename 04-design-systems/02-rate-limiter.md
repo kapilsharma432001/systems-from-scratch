@@ -4,12 +4,12 @@
 
 - A rate limiter controls how many requests a client can make within a specific time frame.
 - It acts like a traffic controller for your API—allowing, for example, "100 requests per minute" from a user, then rejecting excess requests with an HTTP 429 "Too Many Requests" response.
-- Prevents abuse, protects your servers from being overwhelmed by bursts of traffic, and ensure fair usage across all users.
+- Prevents abuse, protects your servers from being overwhelmed by bursts of traffic, and ensures fair usage across all users.
 
 > [!NOTE]
 > Excellent problem—the main difficulty here is: where the limiter lives, which algorithm it uses, and how multiple servers update the same counter safely.
 
-## We will follow the exactly same framework from Hello Interview which is:
+## We will follow the exact same framework from Hello Interview which is:
 
 `Requirements -> Core Entities -> API or Interface -> Data Flow (it is not applicable for this scenario) -> High-Level Design -> Deep Dives`
 
@@ -68,6 +68,16 @@ Let's assume that we are designing it for substantial but realistic load: 1 mill
 
 ## Core Entities
 
-- **Requests:** the incoming API request that need to be evaluated against rate-limiting rules. The request can carry context like client identity, etc.
+- **Requests:** the incoming API request that needs to be evaluated against rate-limiting rules. The request can carry context like client identity, etc.
 - **Clients:** the entities being rate limited.
 - **Rules:** the rate limit policy.
+
+## System Interface
+
+A rate limiter is an infrastructure component that other services call to check if a request should be allowed. The interface is straightforward:
+
+```text
+isRequestAllowed(client_id, rule_id) -> { passes: boolean, remaining: number, resetTime: timestamp }
+```
+
+This method takes an identifier (`userId`, IP address, or API key) and a rule identifier, then returns whether the request should be allowed based on the current usage. It also provides information for response headers like `X-RateLimit-Remaining` and `X-RateLimit-Reset`.
