@@ -9,7 +9,7 @@
 > [!NOTE]
 > Excellent problem—the main difficulty here is: where the limiter lives, which algorithm it uses, and how multiple servers update the same counter safely.
 
-## We will follow the exactly same framework from Hello Interview which is:
+## We will follow the exact same framework from Hello Interview which is:
 
 `Requirements -> Core Entities -> API or Interface -> Data Flow (it is not applicable for this scenario) -> High-Level Design -> Deep Dives`
 
@@ -71,3 +71,11 @@ Let's assume that we are designing it for substantial but realistic load: 1 mill
 - **Requests:** the incoming API request that need to be evaluated against rate-limiting rules. The request can carry context like client identity, etc.
 - **Clients:** the entities being rate limited.
 - **Rules:** the rate limit policy.
+
+## System Interface
+
+- A rate limiter is a infrastructure component that other services call to check if a request should be allowed. The interface is straightforward:
+
+isRequestAllowed(client_id, rule_id, current_time) -> RateLimitResult
+
+-> This method takes an identifier (userId, IP address, or API key) and a rule identifier, then returns whether the request should be allowed based on the current usage. It also provides information for response headers like X-RateLimit-Remaining and X-RateLimit-Reset
