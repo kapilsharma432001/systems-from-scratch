@@ -37,3 +37,28 @@ Focus only on the important ones:
 - Security: users should only retrieve authorized rows and documents
 - Answer quality: responses should be grounded and cited
 - Freshness: structured data should be near real-time; document indexing can be eventually consistent
+
+#### Core Entities
+
+- User
+- Conversation
+- Data Source
+- Documents: represents an uploaded file
+- Document chunk: represent the indexed portion of the document
+- Query Execution: stores the current agent workflow
+- Evidence: represents SQL results or retrieved document chunks
+- Agent Checkpoint: enables crash recovery
+
+#### APIs and Interfaces
+
+1. `POST /queries`
+2. `POST /documents`
+3. `GET /documents/{document_id}/status`
+
+Internally the orchestrator is going to interact with 3 main tools:
+
+- `StructuredQueryTool`
+- `UnstructuredQueryTool`
+- `EvidenceFusionTool`
+
+EvidenceFusionTool combines the result coming from structured or unstructured paths into one clean evidence set before sending it to LLM.
