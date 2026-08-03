@@ -1,4 +1,5 @@
 ### This is for applied AI engineering.
+Here over AWS link, something similar has been designed: https://aws.amazon.com/blogs/machine-learning/boosting-rag-based-intelligent-document-assistants-using-entity-extraction-sql-querying-and-agents-with-amazon-bedrock/
 
 ## Designing a RAG System for Structured and Unstructured Data
 
@@ -62,3 +63,7 @@ Internally the orchestrator is going to interact with 3 main tools:
 - `EvidenceFusionTool`
 
 EvidenceFusionTool combines the result coming from structured or unstructured paths into one clean evidence set before sending it to LLM.
+
+#### High Level Design
+
+- Structured data should be queries using SQL. Unstructured data should be retrived using hybrid search. An orchestrator will decide which path to choose.
