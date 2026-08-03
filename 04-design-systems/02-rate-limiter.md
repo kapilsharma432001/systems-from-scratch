@@ -68,14 +68,34 @@ Let's assume that we are designing it for substantial but realistic load: 1 mill
 
 ## Core Entities
 
-- **Requests:** the incoming API request that need to be evaluated against rate-limiting rules. The request can carry context like client identity, etc.
-- **Clients:** the entities being rate limited.
-- **Rules:** the rate limit policy.
+- **Requests:** the incoming API request that need to be evaluated against rate-limiting rules. The request can carry context like client identity, endpoint being accessed, timestamp etc.
+- **Clients:** the entities being rate limited. This could be users, IP address, API keys, or combinations thereof.
+- **Rules:** the rate limit policy. The rate limiting policies that define limits for different scenarios. Each rule specifies parameters like requests per time window, which client it applies to and what endpoint it covers. For example: "authenticated users get 1000 requests/hour" or "the search API allows 10 requests/minute for an IP"
 
 ## System Interface
 
 - A rate limiter is a infrastructure component that other services call to check if a request should be allowed. The interface is straightforward:
 
-isRequestAllowed(client_id, rule_id, current_time) -> RateLimitResult
+`isRequestAllowed(client_id, rule_id, current_time) -> RateLimitResult`
+
+or something like `isRequestAllowed(client_id, rule_id, current_time) -> { passes: boolean, remaining: number, resetTime: timestamp }`
 
 -> This method takes an identifier (userId, IP address, or API key) and a rule identifier, then returns whether the request should be allowed based on the current usage. It also provides information for response headers like X-RateLimit-Remaining and X-RateLimit-Reset
+
+## High-Level Design
+
+- We will walk through each functional requirement and make sure each is satisfied by the high-level design.
+
+#### 1. The system should identify clients by userId, IP address or API key to apply appropriate limits
+
+- A good solution could be here is to have another microservice, so if any request is coming to any microservice, it will need an additional network round trip which would be to rate-limiter service.
+
+![Rate Limiter - Keeping another service for it](image-9.png)
+
+It's a good design but there are certain challenges around it:
+
+1. Latency - because of additional round time, we may have some extra latency.
+2. We have also introduced another point of failure here which is the rate limiter service failure. If this service fails then we have 2 options: one is to allow every request and another is to fail every request. Neither of this solution is great.
+3. Also there would be operational complexity too. Now we have another service to deploy, monitor, scale and maintain.
+
+A great solution would be API Gateway/Load Balancer
