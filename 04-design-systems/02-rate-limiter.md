@@ -98,4 +98,26 @@ It's a good design but there are certain challenges around it:
 2. We have also introduced another point of failure here which is the rate limiter service failure. If this service fails then we have 2 options: one is to allow every request and another is to fail every request. Neither of this solution is great.
 3. Also there would be operational complexity too. Now we have another service to deploy, monitor, scale and maintain.
 
-A great solution would be API Gateway/Load Balancer
+##### A great solution would be API Gateway/Load Balancer
+
+- The rate limiter runs at the very edge of the system, integrated into the API gateway or load balancer.
+- Every incoming request hits the rate limiter first, before it reaches any of your application servers. The rate limiter examines the request (checking IP address, user authentication header, API keys), applies the appropriate limits, and either forwards the request to downstream services or immediately returns an HTTP 429 response.
+- This is the most popular approach, conceptually simpler and provides strong protection. Your application servers never see blocked requests, so they can focus entirely on processing legitimate traffic.
+
+![API Gateway Rate Limiter](image-10.png)
+
+-> But there are certain limitations with it:
+
+- The main limitation is context. The rate limiter only has access to the information available in the HTTP request itself - headers, URL, IP address, and basic authentication tokens.
+- It can't see deeper business logic or user context that might live in the application layer. For example, we can't easily implement rules like "premium users get 10x higher limits" unless that premium status is encoded in a JWT token or similar.
+- There is also a question of where to store the rate limiting state. The gateway needs fast access to counters and timestamps, which usually means an in-memory store like Redis.
+
+##### How do we identify clients?
+
+- Since we chose the API gateway approach, our rate limiter only has access to information in the HTTP request itself. This includes the request URL/path, all HTTP headers (`Authorization`, `User-Agent`, `X-API-Key`, etc.), query parameters, and the client's IP address.
+- While we can technically make external requests to databases and other services, it adds latency we want to avoid, so we will stick to the request itself.
+- We first need to decide what makes a 'client' unique. We have 3 main options:
+
+1. **IP address:** Good for public APIs when you don't have user accounts. The IP address is typically present in the `X-Forwarded-For` header.
+2. **API Key:** Common for developer APIs. This is denoted in the `X-API-Key` header.
+3. **User ID:** Perfect for authenticated APIs. Each logged-in user gets their own rate limit allocation. This is typically present in the `Authorization` header as a JWT token.
