@@ -121,3 +121,63 @@ It's a good design but there are certain challenges around it:
 1. **IP address:** Good for public APIs when you don't have user accounts. The IP address is typically present in the `X-Forwarded-For` header.
 2. **API Key:** Common for developer APIs. This is denoted in the `X-API-Key` header.
 3. **User ID:** Perfect for authenticated APIs. Each logged-in user gets their own rate limit allocation. This is typically present in the `Authorization` header as a JWT token.
+
+Now, our 2nd functional requirement is:
+
+#### 2. The system should limit requests based on configurable rules
+
+- This is the heart of rate limiting: the algorithm that decides whether to allow or reject requests.
+- There are **4 main algorithms** used in production systems, each with different trade-offs around accuracy, memory usage and complexity.
+
+4 algorithms are:
+
+1. Fixed Window Counter
+2. Sliding Window Log
+3. Sliding Window Counter
+4. Token Bucket
+
+##### Fixed Window Counter
+
+- The simplest approach, it divides time into fixed windows (like 1 minute buckets) and counts requests in each window. If the counter exceeds the limit during a window, reject new requests until the window resets.
+
+**Advantage:** Very simple and memory-efficient.
+
+**Problem:** boundary burst.
+
+A user can make 100 requests at 12:00:59 and then again 100 requests at 12:01:00 <- that becomes 200 requests within approximately 2 seconds.
+
+##### Sliding Window Log
+
+Giving example here:
+
+Rate limiter will store the exact timestamp of every request, and count how many happened in last N seconds.
+
+Suppose the rule is:
+
+- Maximum 3 requests
+- In any rolling 10 seconds window
+
+The core idea:
+
+1. For every request, the rate limiter maintains a list of request timestamps, [2, 5, 8]
+2. When a new request arrives at time 12, calculate the beginning of the current window: 12 - 10 (10 seconds) = 2
+3. Remove timestamps that are outside the last 10 seconds (N seconds/minutes rule)
+4. Count the remaining timestamps and accept the request only when fewer than 3 remain.
+
+**Simple Pseudocode:**
+
+```text
+function allowRequest(userId, currentTime):
+    log = requestLogs[userId]
+
+    windowStart = currentTime - 10
+
+    while log is not empty and log.first <= windowStart:
+        remove log.first
+
+    if log.size >= 3:
+        return false
+
+    add currentTime to log
+    return true
+```
