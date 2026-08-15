@@ -149,3 +149,33 @@ SQS -> Notifo Lambda -> SES
                          ↓
       Update database / alert / suppress email
 ```
+
+#### What Happens If Traffic Doubles Tomorrow?
+
+- Worker Lambda generates more messages, and SQS absorbs the increase.
+- Because Notifo Lambda consumes messages from SQS, Lambda can process multiple messages concurrently and scale the number of concurrent executions.
+- Therefore, Worker Lambda and Notifo Lambda can scale independently.
+
+![Concurrent Lambda executions](image-12.png)
+
+#### Differences Between Standard and FIFO Queues
+
+##### Standard Queue
+
+- Supports very high throughput.
+- Ordering is not guaranteed, and duplicate delivery is possible.
+
+##### FIFO Queue (First-In, First-Out)
+
+- Messages within the same message group are processed in the order in which they are received.
+
+**Why did we choose a standard queue instead of a FIFO queue?**
+
+Strict ordering is not required for our email notification events, so a standard SQS queue is sufficient and supports high throughput and scalability.
+
+#### How Do We Handle Duplicate Messages with a Standard Queue?
+
+- Standard SQS provides at-least-once delivery, so duplicate delivery is possible. We handle duplicates at the consumer level by making Notifo Lambda idempotent.
+- Every notification has a unique identifier, such as a combination of `claim_id` and `updated_at`, or a separate `notification_id`.
+- Before sending an email, Notifo Lambda checks whether the notification has already been processed. If it has, the function skips sending it again.
+- We store the identifier in DynamoDB as the primary key and use a conditional write so that only one consumer can claim a notification atomically.
