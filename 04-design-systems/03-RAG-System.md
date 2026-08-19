@@ -52,9 +52,9 @@ Focus only on the important ones:
 
 #### APIs and Interfaces
 
-1. `POST /queries`
-2. `POST /documents`
-3. `GET /documents/{document_id}/status`
+1. `POST /queries` — Ask a question.
+2. `POST /documents` — Upload or register a document.
+3. `GET /documents/{document_id}/status` — Check whether ingestion is complete.
 
 Internally the orchestrator is going to interact with 3 main tools:
 
@@ -62,8 +62,12 @@ Internally the orchestrator is going to interact with 3 main tools:
 - `UnstructuredQueryTool`
 - `EvidenceFusionTool`
 
-EvidenceFusionTool combines the result coming from structured or unstructured paths into one clean evidence set before sending it to LLM.
+`EvidenceFusionTool` combines results from the structured and unstructured paths into a single evidence set before sending it to the LLM.
 
-#### High Level Design
+#### High-Level Design
 
-- Structured data should be queries using SQL. Unstructured data should be retrived using hybrid search. An orchestrator will decide which path to choose.
+![Initial Version of the High-Level Design](image-9.png)
+
+> **Note:** This is the initial version of the high-level design. We will refine it as we work through the system.
+
+- Structured data should be queried using SQL, while unstructured data should be retrieved using hybrid search. An orchestrator decides which path to use. This is the key design principle.
