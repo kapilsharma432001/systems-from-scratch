@@ -1,5 +1,7 @@
 ## Data Modeling
 
+Related: [SQL vs NoSQL](08-SQL-vs-NoSQL.md)
+
 - A data model describes how your data is structured, stored, and related.
 - In practice, it means defining the entities and tables in your data, how you will find them, and how they relate to one another.
 

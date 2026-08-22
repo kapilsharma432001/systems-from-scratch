@@ -2,11 +2,9 @@
 
 A structured system design learning repository focused on backend engineering, distributed systems, scalability, and interview preparation.
 
-This repository is my personal system design playbook. The goal is to build strong fundamentals first, then apply those fundamentals to real-world system design problems like URL Shortener, News Feed, Chat System, Notification System, File Storage, Rate Limiter, and AI/RAG systems.
+This repository is my personal system design playbook. The goal is to build strong fundamentals first, then apply those fundamentals to real-world system design problems. The current case studies cover a URL Shortener, Rate Limiter, RAG System, and Event-Driven Architecture. Additional systems such as Notification System, File Storage, News Feed, Chat System, and Search are part of the learning roadmap.
 
 Most of the learning material and structure here is inspired by [Hello Interview](https://www.hellointerview.com/). I use it as one of my main references, then rewrite the ideas in my own words as I learn and revise them.
-
-This repo is inspired by Hello Interview, but all notes are written in my own words.
 
 ---
 
@@ -74,13 +72,24 @@ systems-from-scratch/
 │
 ├── 02-core-concepts/
 │   ├── README.md
-│   └── 01-api-design.md
+│   ├── 01-api-design.md
+│   ├── 02-data-modeling.md
+│   ├── 03-caching.md
+│   ├── 04-sharding.md
+│   ├── 05-consistent-hashing.md
+│   ├── 06-CAP-theorem.md
+│   ├── 07-authenticaton.md
+│   └── 08-SQL-vs-NoSQL.md
 │
 ├── 03-Common-Patterns/
-│   └── README.md
+│   └── common-patterns.md
 │
 └── 04-design-systems/
-    └── 00-systems-to-learn.md
+    ├── 00-systems-to-learn.md
+    ├── 01-url-shortener.md
+    ├── 02-rate-limiter.md
+    ├── 03-RAG-System.md
+    └── 04-an-event-driven-architecture.md
 ```
 
 Image files inside the topic folders are supporting diagrams for the notes.
@@ -113,13 +122,23 @@ Image files inside the topic folders are supporting diagrams for the notes.
 
 ### 02 - Core Concepts
 
-- [Core Concepts](02-core-concepts/README.md)
 - [API Design](02-core-concepts/01-api-design.md)
+- [Data Modeling](02-core-concepts/02-data-modeling.md)
+- [Caching](02-core-concepts/03-caching.md)
+- [Sharding](02-core-concepts/04-sharding.md)
+- [Consistent Hashing](02-core-concepts/05-consistent-hashing.md)
+- [CAP Theorem](02-core-concepts/06-CAP-theorem.md)
+- [Authentication](02-core-concepts/07-authenticaton.md)
+- [SQL vs NoSQL](02-core-concepts/08-SQL-vs-NoSQL.md) *(planned — note currently empty)*
 
 ### 03 - Common Patterns
 
-- [Common Patterns](03-Common-Patterns/README.md)
+- [Common Patterns](03-Common-Patterns/common-patterns.md)
 
 ### 04 - Design Systems
 
-- [Systems to Learn](04-design-systems/01-systems-to-learn.md)
+- [Systems to Learn](04-design-systems/00-systems-to-learn.md)
+- [URL Shortener](04-design-systems/01-url-shortener.md)
+- [Rate Limiter](04-design-systems/02-rate-limiter.md)
+- [RAG System](04-design-systems/03-RAG-System.md)
+- [Event-Driven Architecture](04-design-systems/04-an-event-driven-architecture.md)
