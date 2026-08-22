@@ -126,3 +126,77 @@ If either operation fails, the transaction is rolled back. This behavior is supp
 > #### 4. Durability
 >
 > Durability means that once a transaction is committed, it remains committed. The committed data survives failures such as an application crash or a database restart.
+
+#### How Does SQL Scale?
+
+- **Vertical scaling:** Initially, increase CPU, RAM, or SSD capacity. This approach is simple and effective.
+- **Read replicas:** Useful for read-heavy applications. Writes go to the primary database, while reads go to replicas.
+  - Replication can lag. A write to the primary followed immediately by a read from a replica may return stale data.
+  - For critical reads that require the latest data, read from the primary database.
+
+### When Should We Use NoSQL?
+
+NoSQL becomes attractive when a system requires massive horizontal scalability. For example, suppose the system has:
+
+- 500 million users
+- 10 billion events per day
+
+Its primary operation might be:
+
+```text
+Get data by user_id
+```
+
+A distributed key-value or document database can shard this data naturally:
+
+```text
+hash(user_id) -> Shard 1, Shard 2, Shard 3, Shard 4, ...
+```
+
+Good NoSQL use cases include:
+
+- User sessions
+- Logs
+- Caching
+- Chat messages
+- IoT events
+
+### Polyglot Persistence
+
+Polyglot persistence means using multiple database technologies within a single application or system.
+
+![Polyglot persistence](<Polyglot Persistence.png>)
+
+#### Choose SQL When
+
+- The data has strong relationships
+- The system requires transactions
+- The database must enforce constraints
+- Queries are complex
+- Strong consistency is required
+
+#### Choose NoSQL When
+
+- The schema needs to be flexible
+- The data needs to be partitioned easily
+- The system requires high write throughput
+- Query patterns are simple and predictable
+
+### Partition and Sort Keys in NoSQL Databases
+
+- **Partition key:** Determines where data is stored in a distributed database.
+  - Example: `user_id = 123`
+  - The database may internally calculate `hash(user_id)` to select a partition or node.
+  - Example distribution:
+
+    ```text
+    user_123 -> Partition A
+    user_456 -> Partition B
+    user_789 -> Partition C
+    ```
+
+  - A partition key should have high cardinality, meaning it has many distinct values relative to the total number of records. For example, `country` usually has low cardinality, while `user_id` usually has high cardinality.
+  - A good partition key distributes traffic evenly and avoids hot partitions.
+
+- **Sort key:** Organizes multiple records within the same partition.
+  - For example, the partition key could be `user_id`, while the sort key could be `created_at`.
