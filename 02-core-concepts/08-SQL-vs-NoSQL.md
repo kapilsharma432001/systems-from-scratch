@@ -221,3 +221,74 @@ Polyglot persistence means using multiple database technologies within a single 
 - And in case where we want very high horizontal scaling, fewer relationships and where we can have flexible/evolving document structure. For example in case of user sessions, caching, IoT events, logs, activity feeds etc.
 
 ![choosing sql or nosql example](sqlvsnosql-scenario-examples.png)
+
+**One important question: if a query used to take milliseconds but now it is taking seconds (like 8-10 seconds), then how would you troubleshoot this problem?**
+
+- The main thing is if it is happening with every query, then the main problem could be database and not the queries.
+    - If the DB is overall slow, then we should check for CPU/memory/disk/connections/DB load (should look for vertical scaling)
+- Else it is possible that plan changed (in new deployment), index missing, bad joins etc.
+
+But the troubleshooting flow could be like this:
+
+```text
+Query suddenly slow
+       |
+       v
+Is DB overall slow?
+       |
+       +--- Yes → CPU / memory / disk / connections / DB load
+       |
+       No
+       |
+       v
+EXPLAIN ANALYZE (it actually runs the query and shows how PostgreSQL executed it, including the execution plan, actual rows and timing)
+       |
+       v
+Plan changed?
+Index missing?
+Sequential scan?
+Bad join?
+       |
+       v
+Check locks / blocking transactions
+       |
+       v
+Check data growth / data distribution
+       |
+       v
+Check stale statistics
+       |
+       v
+Check application connection pool
+       |
+       v
+Check recent deployment/query changes
+```
+
+### EXPLAIN ANALYZE Is Simple
+
+- For example, one query could be something like this:
+
+```sql
+EXPLAIN ANALYZE
+SELECT *
+FROM orders
+WHERE user_id = 101;
+```
+
+- Suppose orders has 10M rows and user_id is indexed.
+
+```text
+Index Scan using idx_orders_user_id on orders
+  (cost=0.43..12.50 rows=5 width=100)
+  (actual time=0.020..0.035 rows=6 loops=1)
+
+  Index Cond: (user_id = 101)
+
+Planning Time: 0.150 ms
+Execution Time: 0.060 ms
+```
+
+- What matters more is: Index scan using `idx_orders_user_id`: that basically means PostgreSQL used the index instead of scanning the whole table.
+
+![PostgreSQL - EXPLAIN - ANALYZE](explain-analyze-example.png)
