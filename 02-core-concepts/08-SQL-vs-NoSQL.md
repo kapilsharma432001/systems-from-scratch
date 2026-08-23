@@ -200,3 +200,24 @@ Polyglot persistence means using multiple database technologies within a single 
 
 - **Sort key:** Organizes multiple records within the same partition.
   - For example, the partition key could be `user_id`, while the sort key could be `created_at`.
+
+> [!IMPORTANT]
+> When transactions are required—especially across multiple rows or tables—SQL is often the natural fit.
+>
+> For example, placing an order may involve:
+>
+> - Creating the order
+> - Deducting inventory
+> - Recording the charge or payment
+> - Updating the customer's balance
+> - Creating an invoice
+>
+> These operations are strongly related and must behave atomically. A relational database such as PostgreSQL or MySQL is often the simpler choice.
+
+- It's often confusing - when to choose SQL and when to NoSQL. But in case of strong relationships (complex queries/joins, strong transactional requirements and where constraints and integrity matter, we should choose SQL)
+    - primary key, foreign key: these are integrity constraints
+    - while some checks defined by user over some rows are: check constraints
+
+- And in case where we want very high horizontal scaling, fewer relationships and where we can have flexible/evolving document structure. For example in case of user sessions, caching, IoT events, logs, activity feeds etc.
+
+![choosing sql or nosql example](sqlvsnosql-scenario-examples.png)
