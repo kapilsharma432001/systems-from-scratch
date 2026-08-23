@@ -214,12 +214,10 @@ Polyglot persistence means using multiple database technologies within a single 
 >
 > These operations are strongly related and must behave atomically. A relational database such as PostgreSQL or MySQL is often the simpler choice.
 
-### Choosing Between SQL and NoSQL
+- It's often confusing - when to choose SQL and when to NoSQL. But in case of strong relationships (complex queries/joins, strong transactional requirements and where constraints and integrity matter, we should choose SQL)
+    - primary key, foreign key: these are integrity constraints
+    - while some checks defined by user over some rows are: check constraints
 
-It is often difficult to decide when to choose SQL and when to choose NoSQL.
+- And in case where we want very high horizontal scaling, fewer relationships and where we can have flexible/evolving document structure. For example in case of user sessions, caching, IoT events, logs, activity feeds etc.
 
-Choose SQL when the data has strong relationships, queries require complex joins, transactions require strong guarantees, or constraints and data integrity are important. `PRIMARY KEY` and `FOREIGN KEY` constraints enforce entity and referential integrity, while `CHECK` constraints enforce user-defined rules on rows.
-
-Choose NoSQL when the system requires extensive horizontal scaling, the data has fewer relationships, or the document structure needs to be flexible and evolve over time. Common examples include user sessions, caching, IoT events, logs, and activity feeds.
-
-![Examples of choosing SQL or NoSQL](sqlvsnosql-scenario-examples.png)
+![choosing sql or nosql example](sqlvsnosql-scenario-examples.png)
