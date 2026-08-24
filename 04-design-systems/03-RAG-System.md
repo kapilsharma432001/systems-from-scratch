@@ -66,7 +66,7 @@ Internally the orchestrator is going to interact with 3 main tools:
 
 #### High-Level Design
 
-![Initial Version of the High-Level Design](image-9.png)
+![Initial Version of the High-Level Design](rag-system-architecture.png)
 
 > **Note:** This is the initial version of the high-level design. We will refine it as we work through the system.
 
