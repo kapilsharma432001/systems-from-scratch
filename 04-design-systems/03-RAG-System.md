@@ -71,3 +71,16 @@ Internally the orchestrator is going to interact with 3 main tools:
 > **Note:** This is the initial version of the high-level design. We will refine it as we work through the system.
 
 - Structured data should be queried using SQL, while unstructured data should be retrieved using hybrid search. An orchestrator decides which path to use. This is the key design principle.
+- But there is one check here: both services do not always execute in parallel.
+  - **For an independent mixed question, both services can run in parallel.**
+    - The meaning of an independent mixed question is—consider this: What was last quarter's revenue, and what does the policy say about refunds?
+    - Here, both can run in parallel (the structured query service and the unstructured query service can both run in parallel).
+  - But consider: Find customers with revenue above 1 crore and summarise their complaints.
+    - Here, the document search depends on customer IDs returned by SQL: **Structured Query -> Get customer IDs -> Document search filtered by customer IDs -> Evidence fusion**.
+  - Therefore, here, the orchestrator must generate a small execution plan or DAG, not merely choose one or two services.
+  - It should support:
+    - STRUCTURED_QUERY
+    - UNSTRUCTURED_QUERY
+    - MIXED_PARALLEL
+    - MIXED_DEPENDENT
+    - CLARIFICATION_REQUIRED
