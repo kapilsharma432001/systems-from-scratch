@@ -71,7 +71,7 @@ Internally the orchestrator is going to interact with 3 main tools:
 > **Note:** This is the initial version of the high-level design. We will refine it as we work through the system.
 
 - Structured data should be queried using SQL, while unstructured data should be retrieved using hybrid search. An orchestrator decides which path to use. This is the key design principle.
-- But there is one check here: both services do not always execute in parallel.
+- **Point 1:** both services do not always execute in parallel.
   - **For an independent mixed question, both services can run in parallel.**
     - The meaning of an independent mixed question is—consider this: What was last quarter's revenue, and what does the policy say about refunds?
     - Here, both can run in parallel (the structured query service and the unstructured query service can both run in parallel).
@@ -84,3 +84,29 @@ Internally the orchestrator is going to interact with 3 main tools:
     - MIXED_PARALLEL
     - MIXED_DEPENDENT
     - CLARIFICATION_REQUIRED
+
+- **Point 2:** The orchestrator itself needs access to an LLM.
+  - The orchestrator cannot intelligently decide the route by itself unless routing is rule-based.
+  - For complex queries, it normally calls a planning model through the LLM gateway:
+    Question -> Planner prompt sent through LLM gateway -> structured execution plan
+  - **This planner call is important in the diagram.**
+  - It can return structured JSON, something like this:
+
+  ```json
+  {
+    "query_type": "MIXED_DEPENDENT",
+    "steps": [
+      {
+        "id": "step_1",
+        "tool": "structured query",
+        "task": "Find customers with revenue above 1000000"
+      },
+      {
+        "id": "step_2",
+        "tool": "document search",
+        "task": "Find complaints for returned customers",
+        "depends_on": ["step_1"]
+      }
+    ]
+  }
+  ```
