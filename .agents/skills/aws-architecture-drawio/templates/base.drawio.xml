@@ -1,0 +1,32 @@
+<mxfile host="app.diagrams.net" modified="2026-01-01T00:00:00.000Z" agent="Codex" version="26.0.0">
+  <diagram id="aws-architecture" name="Page-1">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1"
+      arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900"
+      math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!--
+        Add vertices and edges under parent="1".
+
+        AWS service example:
+        <mxCell id="lambda1" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" vertex="1" parent="1">
+          <mxGeometry x="400" y="260" width="78" height="78" as="geometry"/>
+        </mxCell>
+
+        Label example:
+        <mxCell id="lambda1-label" value="AWS Lambda" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="370" y="342" width="138" height="34" as="geometry"/>
+        </mxCell>
+
+        Edge example:
+        <mxCell id="edge1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#545B64;strokeWidth=1.5;endArrow=open;endFill=0;" edge="1" parent="1" source="sourceId" target="targetId">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        -->
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,28 @@
+<mxfile host="app.diagrams.net" modified="2026-08-29T00:00:00.000Z" agent="Codex" version="26.0.0">
+  <diagram id="aws-reference-multilane" name="AWS Reference Multilane">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0" background="#FFFFFF">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="title" value="Architecture title" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=24;fontStyle=1;fontColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="50" y="30" width="700" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="frontend-zone" value="Frontend / channels" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#879196;strokeWidth=1;fontSize=13;fontStyle=1;verticalAlign=top;align=left;spacingTop=10;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="160" y="100" width="300" height="380" as="geometry"/>
+        </mxCell>
+        <mxCell id="realtime-zone" value="Real-time application path" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#879196;strokeWidth=1;fontSize=13;fontStyle=1;verticalAlign=top;align=left;spacingTop=10;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="490" y="100" width="1050" height="380" as="geometry"/>
+        </mxCell>
+        <mxCell id="source-zone" value="Document / data sources" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#879196;strokeWidth=1;fontSize=13;fontStyle=1;verticalAlign=top;align=left;spacingTop=10;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="160" y="510" width="300" height="320" as="geometry"/>
+        </mxCell>
+        <mxCell id="offline-zone" value="Offline ingestion and processing" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#879196;strokeWidth=1;fontSize=13;fontStyle=1;verticalAlign=top;align=left;spacingTop=10;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="490" y="510" width="690" height="320" as="geometry"/>
+        </mxCell>
+        <mxCell id="index-zone" value="Indexing / shared data services" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#879196;strokeWidth=1;fontSize=13;fontStyle=1;verticalAlign=top;align=left;spacingTop=10;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="1210" y="510" width="330" height="320" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
