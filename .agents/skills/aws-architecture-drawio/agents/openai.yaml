@@ -1,0 +1,13 @@
+interface:
+  display_name: "AWS Architecture Draw.io"
+  short_description: "Create accurate, editable AWS draw.io diagrams"
+  icon_small: "./assets/icon.svg"
+  icon_large: "./assets/icon.svg"
+  default_prompt: "Use $aws-architecture-drawio to create an accurate editable AWS architecture diagram from this description or reference."
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

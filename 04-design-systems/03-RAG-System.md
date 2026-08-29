@@ -110,3 +110,12 @@ Internally the orchestrator is going to interact with 3 main tools:
     ]
   }
   ```
+
+- **Point 3: Evidence Fusion and Context Builder Need Not Be Separate Services**
+  - These are important logical components for our service, but at least initially, they do not need separate services.
+  - We are going to call these services after our tool calling, so they can actually be placed inside the query orchestrator service.
+    - So, the query orchestrator will first plan -> tool executor -> then evidence fusion -> context builder -> execution state manager
+  - We should make separate microservices only when:
+    - The computational cost of any logic has become very high (for example, fusion logic becomes computationally heavy).
+    - Multiple applications reuse them.
+    - Different teams own them, etc.
