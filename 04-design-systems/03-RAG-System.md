@@ -26,29 +26,12 @@ The system should:
 
 Focus only on the important ones:
 
-- Low Latency: p95 response within approximately 8-10 seconds
+- Low Latency: p95 under 8-10 seconds
 - Scalability: query and ingestion workloads should scale independently
-- Reliability: agent execution should survive server crashes
-- Security: users should only retrieve authorized rows and documents
-- Answer quality: responses should be grounded and cited
-- Freshness: structured data should be near real-time; document indexing can be eventually consistent
+- Reliable: if the agent/server crashes
+- Multi tenant and secure
+- Answer should be grounded in evidence
 
-#### Core Entities
-
-- User
-- Conversation
-- Data Source
-- Documents: represents an uploaded file
-- Document chunk: represent the indexed portion of the document
-- Query Execution: stores the current agent workflow
-- Evidence: represents SQL results or retrieved document chunks
-- Agent Checkpoint: enables crash recovery
-
-#### APIs and Interfaces
-
-1. `POST /queries` — Ask a question.
-2. `POST /documents` — Upload or register a document.
-3. `GET /documents/{document_id}/status` — Check whether ingestion is complete.
 
 #### Ingestion and Storage Prerequisite
 
@@ -72,58 +55,9 @@ Internally the orchestrator is going to interact with 3 main tools:
 
 #### High-Level Design
 
-![Initial Version of the High-Level Design](rag-system-architecture.png)
+![Initial Version of the High-Level Design](<../drawio-architecture-diagrams/RAG Query Architecture.png>)
 
 > **Note:** This is the initial version of the high-level design. We will refine it as we work through the system.
 
-- Structured data in PostgreSQL should be queried using SQL, while unstructured data indexed in OpenSearch should be retrieved using hybrid search. An orchestrator decides which path to use. This is the key design principle.
-- **Point 1:** both services do not always execute in parallel.
-  - **For an independent mixed question, both services can run in parallel.**
-    - The meaning of an independent mixed question is—consider this: What was last quarter's revenue, and what does the policy say about refunds?
-    - Here, both can run in parallel (the structured query service and the unstructured query service can both run in parallel).
-  - But consider: Find customers with revenue above 1 crore and summarise their complaints.
-    - Here, the document search depends on customer IDs returned by SQL: **Structured Query -> Get customer IDs -> Document search filtered by customer IDs -> Evidence fusion**.
-  - Therefore, here, the orchestrator must generate a small execution plan or DAG, not merely choose one or two services.
-  - It should support:
-    - STRUCTURED_QUERY
-    - UNSTRUCTURED_QUERY
-    - MIXED_PARALLEL
-    - MIXED_DEPENDENT
-    - CLARIFICATION_REQUIRED
-
-- **Point 2:** The orchestrator itself needs access to an LLM.
-  - The orchestrator cannot intelligently decide the route by itself unless routing is rule-based.
-  - For complex queries, it normally calls a planning model through the LLM gateway:
-    Question -> Planner prompt sent through LLM gateway -> structured execution plan
-  - **This planner call is important in the diagram.**
-  - It can return structured JSON, something like this:
-
-  ```json
-  {
-    "query_type": "MIXED_DEPENDENT",
-    "steps": [
-      {
-        "id": "step_1",
-        "tool": "structured query",
-        "task": "Find customers with revenue above 1000000"
-      },
-      {
-        "id": "step_2",
-        "tool": "document search",
-        "task": "Find complaints for returned customers",
-        "depends_on": ["step_1"]
-      }
-    ]
-  }
-  ```
-
-- **Point 3: Evidence Fusion and Context Builder Need Not Be Separate Services**
-  - These are important logical components for our service, but at least initially, they do not need separate services.
-  - We are going to call these services after our tool calling, so they can actually be placed inside the query orchestrator service.
-    - So, the query orchestrator will first plan -> tool executor -> then evidence fusion -> context builder -> execution state manager
-  - We should make separate microservices only when:
-    - The computational cost of any logic has become very high (for example, fusion logic becomes computationally heavy).
-    - Multiple applications reuse them.
-    - Different teams own them, etc.
 
 
