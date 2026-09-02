@@ -2,11 +2,9 @@
 
 A structured system design learning repository focused on backend engineering, distributed systems, scalability, and interview preparation.
 
-This repository is my personal system design playbook. The goal is to build strong fundamentals first, then apply those fundamentals to real-world system design problems like URL Shortener, News Feed, Chat System, Notification System, File Storage, Rate Limiter, and AI/RAG systems.
+This repository is my personal system design playbook. The goal is to build strong fundamentals first, then apply those fundamentals to real-world system design problems. The current case studies cover a URL Shortener, Rate Limiter, RAG System, and Event-Driven Architecture. Additional systems such as Notification System, File Storage, News Feed, Chat System, and Search are part of the learning roadmap.
 
 Most of the learning material and structure here is inspired by [Hello Interview](https://www.hellointerview.com/). I use it as one of my main references, then rewrite the ideas in my own words as I learn and revise them.
-
-This repo is inspired by Hello Interview, but all notes are written in my own words.
 
 ---
 
@@ -140,7 +138,6 @@ part of the learning sequence.
 
 ### 02 - Core Concepts
 
-- [Core Concepts](02-core-concepts/README.md)
 - [API Design](02-core-concepts/01-api-design.md)
 - [Data Modeling](02-core-concepts/02-data-modeling.md)
 - [Caching](02-core-concepts/03-caching.md)
@@ -148,6 +145,7 @@ part of the learning sequence.
 - [Consistent Hashing](02-core-concepts/05-consistent-hashing.md)
 - [CAP Theorem](02-core-concepts/06-CAP-theorem.md)
 - [Authentication](02-core-concepts/07-authenticaton.md)
+- [SQL vs NoSQL](02-core-concepts/08-SQL-vs-NoSQL.md) *(planned — note currently empty)*
 
 ### 03 - Common Patterns
 
