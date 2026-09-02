@@ -1,0 +1,256 @@
+<mxfile host="app.diagrams.net" modified="2026-08-30T00:00:00.000Z" agent="Codex" version="24.7.17">
+  <diagram id="rag-query-architecture" name="RAG Query Architecture">
+    <mxGraphModel dx="1540" dy="820" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3000" pageHeight="1400" background="#FFFFFF" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="RAG Query Architecture — Structured and Unstructured Data" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=28;fontStyle=1;fontColor=#232F3E;" parent="1" vertex="1">
+          <mxGeometry x="60" y="28" width="1500" height="42" as="geometry"/>
+        </mxCell>
+        <mxCell id="subtitle" value="Dynamic planning, independently scalable query tools, evidence fusion, grounded answer generation, and citation validation" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontColor=#545B64;" parent="1" vertex="1">
+          <mxGeometry x="60" y="74" width="1450" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="group-access" value="CLIENT AND ACCESS" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#879196;strokeWidth=1;fontSize=13;fontStyle=1;fontColor=#545B64;verticalAlign=top;align=left;spacingTop=12;spacingLeft=14;" parent="1" vertex="1">
+          <mxGeometry x="50" y="140" width="370" height="1140" as="geometry"/>
+        </mxCell>
+        <mxCell id="group-orchestration" value="QUERY ORCHESTRATION" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#879196;strokeWidth=1;fontSize=13;fontStyle=1;fontColor=#545B64;verticalAlign=top;align=left;spacingTop=12;spacingLeft=14;" parent="1" vertex="1">
+          <mxGeometry x="450" y="140" width="1080" height="1140" as="geometry"/>
+        </mxCell>
+        <mxCell id="group-tools" value="INDEPENDENT QUERY TOOLS" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#879196;strokeWidth=1;fontSize=13;fontStyle=1;fontColor=#545B64;verticalAlign=top;align=left;spacingTop=12;spacingLeft=14;" parent="1" vertex="1">
+          <mxGeometry x="1560" y="140" width="520" height="1140" as="geometry"/>
+        </mxCell>
+        <mxCell id="group-managed" value="MANAGED DATA AND AI SERVICES" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#879196;strokeWidth=1;fontSize=13;fontStyle=1;fontColor=#545B64;verticalAlign=top;align=left;spacingTop=12;spacingLeft=14;" parent="1" vertex="1">
+          <mxGeometry x="2110" y="140" width="840" height="1140" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="user" value="" style="shape=mxgraph.aws4.users;html=1;fillColor=#232F3E;strokeColor=#232F3E;" parent="1" vertex="1">
+          <mxGeometry x="90" y="380" width="78" height="78" as="geometry"/>
+        </mxCell>
+        <mxCell id="user-label" value="&lt;b&gt;User&lt;/b&gt;&lt;br&gt;Natural-language question" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;fontSize=13;fontColor=#232F3E;" parent="1" vertex="1">
+          <mxGeometry x="45" y="470" width="168" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="api-gateway" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.api_gateway;" parent="1" vertex="1">
+          <mxGeometry x="260" y="380" width="78" height="78" as="geometry"/>
+        </mxCell>
+        <mxCell id="api-label" value="&lt;b&gt;Amazon API Gateway&lt;/b&gt;&lt;br&gt;POST /queries" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;fontSize=13;fontColor=#232F3E;" parent="1" vertex="1">
+          <mxGeometry x="205" y="470" width="188" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="cognito" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cognito;" parent="1" vertex="1">
+          <mxGeometry x="90" y="650" width="78" height="78" as="geometry"/>
+        </mxCell>
+        <mxCell id="cognito-label" value="&lt;b&gt;Amazon Cognito&lt;/b&gt;&lt;br&gt;Authentication and JWT claims" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;fontSize=13;fontColor=#232F3E;" parent="1" vertex="1">
+          <mxGeometry x="35" y="740" width="190" height="52" as="geometry"/>
+        </mxCell>
+        <mxCell id="question-label" value="Question + token" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontColor=#545B64;" parent="1" vertex="1">
+          <mxGeometry x="120" y="330" width="135" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="authorized-label" value="Authorized request" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontColor=#545B64;" parent="1" vertex="1">
+          <mxGeometry x="430" y="350" width="150" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="auth-label" value="Cognito authorizer" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontColor=#545B64;" parent="1" vertex="1">
+          <mxGeometry x="205" y="575" width="135" height="24" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="lambda-boundary" value="AWS LAMBDA — QUERY ORCHESTRATOR (INITIAL DEPLOYMENT)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFCF7;strokeColor=#D86613;strokeWidth=1.2;fontSize=13;fontStyle=1;fontColor=#545B64;verticalAlign=top;align=left;spacingTop=12;spacingLeft=14;" parent="1" vertex="1">
+          <mxGeometry x="650" y="270" width="830" height="820" as="geometry"/>
+        </mxCell>
+        <mxCell id="orchestrator-lambda" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" parent="1" vertex="1">
+          <mxGeometry x="690" y="370" width="78" height="78" as="geometry"/>
+        </mxCell>
+        <mxCell id="orchestrator-label" value="&lt;b&gt;AWS Lambda&lt;/b&gt;&lt;br&gt;Query Orchestrator" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;fontSize=13;fontColor=#232F3E;" parent="1" vertex="1">
+          <mxGeometry x="655" y="460" width="148" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="planner" value="&lt;b&gt;Planner / Router&lt;/b&gt;&lt;br&gt;&lt;br&gt;Bedrock returns a structured plan&lt;br&gt;Single · parallel · dependent&lt;br&gt;or clarification required" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E8;strokeColor=#D86613;strokeWidth=1.5;fontSize=13;fontColor=#232F3E;align=center;verticalAlign=middle;arcSize=8;" parent="1" vertex="1">
+          <mxGeometry x="850" y="335" width="220" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="tool-executor" value="&lt;b&gt;Tool Executor&lt;/b&gt;&lt;br&gt;&lt;br&gt;Runs the plan as a small DAG&lt;br&gt;Parallel tools when independent&lt;br&gt;Dependent tools when IDs filter search" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3F4F6;strokeColor=#545B64;strokeWidth=1.5;fontSize=13;fontColor=#232F3E;align=center;verticalAlign=middle;arcSize=8;" parent="1" vertex="1">
+          <mxGeometry x="1170" y="335" width="220" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="evidence-fusion" value="&lt;b&gt;Evidence Fusion&lt;/b&gt;&lt;br&gt;&lt;br&gt;Combine SQL rows and retrieved chunks&lt;br&gt;into one cited evidence set" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF3F8;strokeColor=#147EBA;strokeWidth=1.5;fontSize=13;fontColor=#232F3E;align=center;verticalAlign=middle;arcSize=8;" parent="1" vertex="1">
+          <mxGeometry x="990" y="650" width="210" height="130" as="geometry"/>
+        </mxCell>
+        <mxCell id="context-builder" value="&lt;b&gt;Context Builder&lt;/b&gt;&lt;br&gt;&lt;br&gt;Build grounded prompt&lt;br&gt;with source references" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E9F8F5;strokeColor=#01A88D;strokeWidth=1.5;fontSize=13;fontColor=#232F3E;align=center;verticalAlign=middle;arcSize=8;" parent="1" vertex="1">
+          <mxGeometry x="1230" y="650" width="220" height="130" as="geometry"/>
+        </mxCell>
+        <mxCell id="execution-state" value="&lt;b&gt;Execution State Manager&lt;/b&gt;&lt;br&gt;&lt;br&gt;Conversation state&lt;br&gt;Query execution + agent checkpoints" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3F4F6;strokeColor=#687078;strokeWidth=1.2;fontSize=13;fontColor=#232F3E;align=center;verticalAlign=middle;arcSize=8;" parent="1" vertex="1">
+          <mxGeometry x="850" y="880" width="220" height="130" as="geometry"/>
+        </mxCell>
+        <mxCell id="answer-validator" value="&lt;b&gt;Answer and Citation Validator&lt;/b&gt;&lt;br&gt;&lt;br&gt;Verify grounding and source references&lt;br&gt;Return answer with citations" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EEF7ED;strokeColor=#3F8624;strokeWidth=1.5;fontSize=13;fontColor=#232F3E;align=center;verticalAlign=middle;arcSize=8;" parent="1" vertex="1">
+          <mxGeometry x="1200" y="880" width="240" height="130" as="geometry"/>
+        </mxCell>
+        <mxCell id="state-store" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.dynamodb;" parent="1" vertex="1">
+          <mxGeometry x="510" y="850" width="78" height="78" as="geometry"/>
+        </mxCell>
+        <mxCell id="state-store-label" value="&lt;b&gt;Amazon DynamoDB&lt;/b&gt;&lt;br&gt;Conversation Store&lt;br&gt;Query Execution · Agent Checkpoint" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;fontSize=13;fontColor=#232F3E;" parent="1" vertex="1">
+          <mxGeometry x="465" y="940" width="168" height="68" as="geometry"/>
+        </mxCell>
+        <mxCell id="state-label" value="Read/write durable state" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontColor=#545B64;" parent="1" vertex="1">
+          <mxGeometry x="610" y="825" width="190" height="24" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="structured-lambda" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" parent="1" vertex="1">
+          <mxGeometry x="1700" y="340" width="78" height="78" as="geometry"/>
+        </mxCell>
+        <mxCell id="structured-label" value="&lt;b&gt;AWS Lambda&lt;/b&gt;&lt;br&gt;Structured Query Tool" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;fontSize=13;fontColor=#232F3E;" parent="1" vertex="1">
+          <mxGeometry x="1640" y="430" width="198" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="structured-steps" value="&lt;b&gt;STRUCTURED PATH&lt;/b&gt;&lt;br&gt;&lt;br&gt;Read semantic schema&lt;br&gt;Generate Text-to-SQL&lt;br&gt;Validate SELECT-only SQL&lt;br&gt;Return rows as evidence" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF3F8;strokeColor=#147EBA;strokeWidth=1.2;fontSize=13;fontColor=#232F3E;align=center;verticalAlign=middle;arcSize=8;" parent="1" vertex="1">
+          <mxGeometry x="1620" y="500" width="240" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="retrieval-lambda" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" parent="1" vertex="1">
+          <mxGeometry x="1700" y="710" width="78" height="78" as="geometry"/>
+        </mxCell>
+        <mxCell id="retrieval-label" value="&lt;b&gt;AWS Lambda&lt;/b&gt;&lt;br&gt;Document Retrieval Tool" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;fontSize=13;fontColor=#232F3E;" parent="1" vertex="1">
+          <mxGeometry x="1635" y="800" width="208" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="retrieval-steps" value="&lt;b&gt;UNSTRUCTURED PATH&lt;/b&gt;&lt;br&gt;&lt;br&gt;Embed the query&lt;br&gt;BM25 + vector search&lt;br&gt;Reciprocal Rank Fusion (RRF)&lt;br&gt;Rerank and return cited chunks" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F4ECFF;strokeColor=#8C4FFF;strokeWidth=1.2;fontSize=13;fontColor=#232F3E;align=center;verticalAlign=middle;arcSize=8;" parent="1" vertex="1">
+          <mxGeometry x="1620" y="865" width="240" height="165" as="geometry"/>
+        </mxCell>
+        <mxCell id="structured-call-label" value="Invoke / SQL evidence" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontColor=#545B64;" parent="1" vertex="1">
+          <mxGeometry x="1440" y="345" width="160" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="retrieval-call-label" value="Invoke / chunk evidence" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontColor=#545B64;" parent="1" vertex="1">
+          <mxGeometry x="1360" y="560" width="170" height="24" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="glue" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.glue_data_catalog;" parent="1" vertex="1">
+          <mxGeometry x="2210" y="300" width="78" height="78" as="geometry"/>
+        </mxCell>
+        <mxCell id="glue-label" value="&lt;b&gt;AWS Glue Data Catalog&lt;/b&gt;&lt;br&gt;Semantic schema catalog&lt;br&gt;Tables · columns · relationships" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;fontSize=13;fontColor=#232F3E;" parent="1" vertex="1">
+          <mxGeometry x="2125" y="390" width="248" height="68" as="geometry"/>
+        </mxCell>
+        <mxCell id="rds" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.rds;" parent="1" vertex="1">
+          <mxGeometry x="2210" y="500" width="78" height="78" as="geometry"/>
+        </mxCell>
+        <mxCell id="rds-label" value="&lt;b&gt;Amazon RDS for PostgreSQL&lt;/b&gt;&lt;br&gt;Read replica&lt;br&gt;Validated read-only SQL" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;fontSize=13;fontColor=#232F3E;" parent="1" vertex="1">
+          <mxGeometry x="2120" y="590" width="258" height="68" as="geometry"/>
+        </mxCell>
+        <mxCell id="bedrock" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.bedrock;" parent="1" vertex="1">
+          <mxGeometry x="2690" y="570" width="78" height="78" as="geometry"/>
+        </mxCell>
+        <mxCell id="bedrock-label" value="&lt;b&gt;Amazon Bedrock&lt;/b&gt;&lt;br&gt;Planner + answer model&lt;br&gt;Embeddings + reranker" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;fontSize=13;fontColor=#232F3E;" parent="1" vertex="1">
+          <mxGeometry x="2590" y="660" width="278" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="opensearch" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.elasticsearch_service;" parent="1" vertex="1">
+          <mxGeometry x="2210" y="830" width="78" height="78" as="geometry"/>
+        </mxCell>
+        <mxCell id="opensearch-label" value="&lt;b&gt;Amazon OpenSearch Service&lt;/b&gt;&lt;br&gt;BM25 + vector search&lt;br&gt;Document and tenant filters" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;fontSize=13;fontColor=#232F3E;" parent="1" vertex="1">
+          <mxGeometry x="2115" y="920" width="268" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="planning-label" value="Planning prompt ↔ structured JSON execution plan" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontColor=#D86613;" parent="1" vertex="1">
+          <mxGeometry x="1540" y="180" width="360" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="schema-label" value="Schema metadata" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontColor=#147EBA;" parent="1" vertex="1">
+          <mxGeometry x="1940" y="300" width="145" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="sql-label" value="Read-only SQL ↔ rows" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontColor=#147EBA;" parent="1" vertex="1">
+          <mxGeometry x="1915" y="505" width="170" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="models-label" value="Query embedding + rerank" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontColor=#8C4FFF;" parent="1" vertex="1">
+          <mxGeometry x="2160" y="700" width="190" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="search-label" value="Hybrid search ↔ candidates" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontColor=#8C4FFF;" parent="1" vertex="1">
+          <mxGeometry x="1960" y="825" width="190" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="generation-label" value="Grounded prompt ↔ answer" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontColor=#01A88D;" parent="1" vertex="1">
+          <mxGeometry x="2010" y="1060" width="200" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="response-label" value="Answer + citations" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontColor=#3F8624;" parent="1" vertex="1">
+          <mxGeometry x="690" y="1188" width="300" height="24" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="edge-user-api" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#545B64;strokeWidth=1.5;endArrow=open;endFill=0;exitX=1;exitY=0.25;entryX=0;entryY=0.25;" parent="1" source="user" target="api-gateway" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="edge-api-user-response" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#3F8624;strokeWidth=1.5;endArrow=open;endFill=0;exitX=0;exitY=0.75;entryX=1;entryY=0.75;" parent="1" source="api-gateway" target="user" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="edge-api-cognito" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#545B64;strokeWidth=1.2;endArrow=none;exitX=0.2;exitY=1;entryX=1;entryY=0.5;" parent="1" source="api-gateway" target="cognito" edge="1">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="210" y="560"/><mxPoint x="210" y="689"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="edge-api-orchestrator" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#545B64;strokeWidth=1.5;endArrow=open;endFill=0;exitX=1;exitY=0.25;entryX=0;entryY=0.25;" parent="1" source="api-gateway" target="orchestrator-lambda" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="edge-lambda-planner" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#545B64;strokeWidth=1.5;endArrow=open;endFill=0;" parent="1" source="orchestrator-lambda" target="planner" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="edge-planner-tool" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#545B64;strokeWidth=1.5;endArrow=open;endFill=0;" parent="1" source="planner" target="tool-executor" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="edge-planner-bedrock" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#D86613;strokeWidth=1.5;startArrow=open;startFill=0;endArrow=open;endFill=0;exitX=1;exitY=0.2;entryX=0.5;entryY=0;" parent="1" source="planner" target="bedrock" edge="1">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1110" y="365"/><mxPoint x="1110" y="215"/><mxPoint x="2729" y="215"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="edge-tool-structured" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#545B64;strokeWidth=1.5;startArrow=open;startFill=0;endArrow=open;endFill=0;exitX=1;exitY=0.3;entryX=0;entryY=0.5;" parent="1" source="tool-executor" target="structured-lambda" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="edge-tool-retrieval" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#545B64;strokeWidth=1.5;startArrow=open;startFill=0;endArrow=open;endFill=0;exitX=0.8;exitY=1;entryX=0;entryY=0.5;" parent="1" source="tool-executor" target="retrieval-lambda" edge="1">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1346" y="550"/><mxPoint x="1540" y="550"/><mxPoint x="1540" y="749"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="edge-tool-fusion" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#545B64;strokeWidth=1.5;endArrow=open;endFill=0;exitX=0.35;exitY=1;entryX=0.5;entryY=0;" parent="1" source="tool-executor" target="evidence-fusion" edge="1">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1247" y="610"/><mxPoint x="1095" y="610"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="edge-fusion-context" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#545B64;strokeWidth=1.5;endArrow=open;endFill=0;" parent="1" source="evidence-fusion" target="context-builder" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="edge-context-validator" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#545B64;strokeWidth=1.5;endArrow=open;endFill=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" parent="1" source="context-builder" target="answer-validator" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="edge-planner-state" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#687078;strokeWidth=1.2;endArrow=open;endFill=0;dashed=1;dashPattern=8 4;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" parent="1" source="planner" target="execution-state" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="edge-state-dynamodb" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#545B64;strokeWidth=1.5;startArrow=open;startFill=0;endArrow=open;endFill=0;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" parent="1" source="execution-state" target="state-store" edge="1">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="730" y="945"/><mxPoint x="730" y="889"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="edge-context-bedrock" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#01A88D;strokeWidth=1.5;startArrow=open;startFill=0;endArrow=open;endFill=0;exitX=1;exitY=0.65;entryX=1;entryY=0.5;" parent="1" source="context-builder" target="bedrock" edge="1">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1510" y="735"/><mxPoint x="1510" y="1090"/><mxPoint x="2910" y="1090"/><mxPoint x="2910" y="609"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="edge-validator-api" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#3F8624;strokeWidth=1.5;endArrow=open;endFill=0;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" parent="1" source="answer-validator" target="api-gateway" edge="1">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1320" y="1220"/><mxPoint x="299" y="1220"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="edge-glue-structured" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#147EBA;strokeWidth=1.5;endArrow=open;endFill=0;exitX=0;exitY=0.5;entryX=1;entryY=0.25;" parent="1" source="glue" target="structured-lambda" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="edge-structured-rds" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#147EBA;strokeWidth=1.5;startArrow=open;startFill=0;endArrow=open;endFill=0;exitX=1;exitY=0.75;entryX=0;entryY=0.5;" parent="1" source="structured-lambda" target="rds" edge="1">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1950" y="399"/><mxPoint x="1950" y="539"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="edge-structured-retrieval-dependent" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#687078;strokeWidth=1.2;endArrow=open;endFill=0;dashed=1;dashPattern=8 4;exitX=1;exitY=0.9;entryX=0.5;entryY=0;" parent="1" source="structured-lambda" target="retrieval-lambda" edge="1">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1885" y="410"/><mxPoint x="1885" y="680"/><mxPoint x="1739" y="680"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="edge-retrieval-bedrock" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#8C4FFF;strokeWidth=1.5;startArrow=open;startFill=0;endArrow=open;endFill=0;exitX=1;exitY=0.35;entryX=0;entryY=0.5;" parent="1" source="retrieval-lambda" target="bedrock" edge="1">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="2500" y="737"/><mxPoint x="2500" y="609"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="edge-retrieval-opensearch" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#8C4FFF;strokeWidth=1.5;startArrow=open;startFill=0;endArrow=open;endFill=0;exitX=1;exitY=0.65;entryX=0;entryY=0.5;" parent="1" source="retrieval-lambda" target="opensearch" edge="1">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="2150" y="761"/><mxPoint x="2150" y="869"/></Array></mxGeometry>
+        </mxCell>
+
+        <mxCell id="edge-validator-final-state" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#687078;strokeWidth=1.2;endArrow=open;endFill=0;dashed=1;dashPattern=8 4;exitX=0;exitY=0.75;entryX=1;entryY=0.75;" parent="1" source="answer-validator" target="execution-state" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="step-1" value="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#232F3E;strokeColor=#232F3E;fontColor=#FFFFFF;fontStyle=1;fontSize=12;align=center;verticalAlign=middle;" parent="1" vertex="1">
+          <mxGeometry x="270" y="345" width="22" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="step-2" value="2" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#232F3E;strokeColor=#232F3E;fontColor=#FFFFFF;fontStyle=1;fontSize=12;align=center;verticalAlign=middle;" parent="1" vertex="1">
+          <mxGeometry x="825" y="310" width="22" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="step-3" value="3" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#232F3E;strokeColor=#232F3E;fontColor=#FFFFFF;fontStyle=1;fontSize=12;align=center;verticalAlign=middle;" parent="1" vertex="1">
+          <mxGeometry x="1145" y="310" width="22" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="step-4a" value="4a" style="ellipse;whiteSpace=wrap;html=1;fillColor=#232F3E;strokeColor=#232F3E;fontColor=#FFFFFF;fontStyle=1;fontSize=12;align=center;verticalAlign=middle;" parent="1" vertex="1">
+          <mxGeometry x="1668" y="312" width="30" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="step-4b" value="4b" style="ellipse;whiteSpace=wrap;html=1;fillColor=#232F3E;strokeColor=#232F3E;fontColor=#FFFFFF;fontStyle=1;fontSize=12;align=center;verticalAlign=middle;" parent="1" vertex="1">
+          <mxGeometry x="1668" y="682" width="30" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="step-5" value="5" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#232F3E;strokeColor=#232F3E;fontColor=#FFFFFF;fontStyle=1;fontSize=12;align=center;verticalAlign=middle;" parent="1" vertex="1">
+          <mxGeometry x="965" y="625" width="22" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="step-6" value="6" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#232F3E;strokeColor=#232F3E;fontColor=#FFFFFF;fontStyle=1;fontSize=12;align=center;verticalAlign=middle;" parent="1" vertex="1">
+          <mxGeometry x="1205" y="625" width="22" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="step-7" value="7" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#232F3E;strokeColor=#232F3E;fontColor=#FFFFFF;fontStyle=1;fontSize=12;align=center;verticalAlign=middle;" parent="1" vertex="1">
+          <mxGeometry x="2665" y="545" width="22" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="step-8" value="8" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#232F3E;strokeColor=#232F3E;fontColor=#FFFFFF;fontStyle=1;fontSize=12;align=center;verticalAlign=middle;" parent="1" vertex="1">
+          <mxGeometry x="1175" y="855" width="22" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="step-9" value="9" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#232F3E;strokeColor=#232F3E;fontColor=#FFFFFF;fontStyle=1;fontSize=12;align=center;verticalAlign=middle;" parent="1" vertex="1">
+          <mxGeometry x="655" y="1189" width="22" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="dependent-path-label" value="MIXED_DEPENDENT:&lt;br&gt;IDs / filters constrain retrieval" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontColor=#545B64;" parent="1" vertex="1">
+          <mxGeometry x="1895" y="615" width="170" height="42" as="geometry"/>
+        </mxCell>
+        <mxCell id="final-state-label" value="Final result / checkpoint" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontColor=#687078;" parent="1" vertex="1">
+          <mxGeometry x="1075" y="950" width="120" height="24" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="legend" value="Numbered badges = execution order · 4a/4b = parallel when independent · Solid arrows = synchronous request/response or data access · Dashed arrows = checkpoint/control update or conditional dependency · Double-ended arrows = required request/result exchange" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontColor=#545B64;" parent="1" vertex="1">
+          <mxGeometry x="60" y="1310" width="1720" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="deployment-note" value="Deployment decision: AWS Lambda fits the stated ~8–10 second synchronous query, small dynamic DAG, and per-request scaling. Durable state is externalized to DynamoDB. Revisit Amazon ECS on AWS Fargate if workflows become long-running, require persistent streaming, or need large/native runtime dependencies." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontColor=#545B64;fontStyle=2;" parent="1" vertex="1">
+          <mxGeometry x="60" y="1340" width="2780" height="46" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
