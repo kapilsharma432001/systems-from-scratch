@@ -19,6 +19,7 @@ Common verified resource-icon names:
 | Amazon SNS | `sns` |
 | AWS Step Functions | `step_functions` |
 | Amazon DynamoDB | `dynamodb` |
+| AWS Glue Data Catalog | `glue_data_catalog` |
 | Amazon Aurora | `aurora` |
 | Amazon RDS | `rds` |
 | Amazon Cognito | `cognito` |
