@@ -16,17 +16,11 @@ The system should be reliable, secure, scalable, and able to answer questions th
 
 The system should:
 
-- Answer natural-language questions from structured data
-- Answer questions from PDFs, documents, and Excel files
-- Answer questions requiring both structured and unstructured data
-- Return citations or source references
-- Support conversational follow-up questions
-
-Out of scope:
-
-- Modifying structured data
-- Fully autonomous workflows
-- Training a foundation model
+- Answer questions from structured data.
+- Answer questions from unstructured documents (data).
+- Answer questions requiring both.
+- Support follow up questions.
+- Return citations/sources.
 
 #### Non-functional Requirements
 
@@ -56,6 +50,18 @@ Focus only on the important ones:
 2. `POST /documents` — Upload or register a document.
 3. `GET /documents/{document_id}/status` — Check whether ingestion is complete.
 
+#### Ingestion and Storage Prerequisite
+
+Before the system can answer a question, the source data must be ingested, processed, and stored in a form that the retrieval services can query. Ingestion is therefore a prerequisite for the query-serving path, even though the two workloads should scale independently.
+
+- Structured data is extracted and normalized into PostgreSQL, where the structured query service can retrieve it using SQL.
+- Unstructured data is extracted (using OCR when required), chunked, embedded, and indexed in OpenSearch, where the unstructured query service can retrieve it using hybrid search.
+- Document metadata such as `document_id`, version, content hash, `tenant_id`, and ingestion status is maintained so that updates are idempotent, traceable, and access-controlled.
+
+The complete ingestion flow—including S3 events, SQS, the ingestion worker, content routing, version handling, and storage—is described in [RAG System Prerequisites: Ingestion Pipeline](003-RAG-systems-prerequisites.md).
+
+Once ingestion is complete, the query orchestrator can retrieve evidence from PostgreSQL, OpenSearch, or both, depending on the question.
+
 Internally the orchestrator is going to interact with 3 main tools:
 
 - `StructuredQueryTool`
@@ -70,7 +76,7 @@ Internally the orchestrator is going to interact with 3 main tools:
 
 > **Note:** This is the initial version of the high-level design. We will refine it as we work through the system.
 
-- Structured data should be queried using SQL, while unstructured data should be retrieved using hybrid search. An orchestrator decides which path to use. This is the key design principle.
+- Structured data in PostgreSQL should be queried using SQL, while unstructured data indexed in OpenSearch should be retrieved using hybrid search. An orchestrator decides which path to use. This is the key design principle.
 - **Point 1:** both services do not always execute in parallel.
   - **For an independent mixed question, both services can run in parallel.**
     - The meaning of an independent mixed question is—consider this: What was last quarter's revenue, and what does the policy say about refunds?
@@ -119,6 +125,5 @@ Internally the orchestrator is going to interact with 3 main tools:
     - The computational cost of any logic has become very high (for example, fusion logic becomes computationally heavy).
     - Multiple applications reuse them.
     - Different teams own them, etc.
-
 
 
