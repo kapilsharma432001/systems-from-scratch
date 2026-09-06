@@ -1,0 +1,212 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3600" height="2280" viewBox="0 0 3600 2280" role="img" aria-labelledby="title description">
+  <title id="title">Enterprise RAG Query Flow</title>
+  <desc id="description">A simple Excalidraw-style enterprise RAG query flow. The Query Orchestrator contains planning, tool execution, evidence fusion, context building, and execution state. Structured and unstructured query results return directly to the internal Evidence Fusion component.</desc>
+
+  <defs>
+    <style>
+      .canvas { fill: #ffffff; }
+      .title { font: 700 38px "Comic Sans MS", "Marker Felt", cursive; fill: #1e1e1e; }
+      .subtitle { font: 18px "Comic Sans MS", "Marker Felt", cursive; fill: #495057; }
+      .frame-title { font: 700 25px "Comic Sans MS", "Marker Felt", cursive; fill: #7048e8; }
+      .section { font: 700 17px "Comic Sans MS", "Marker Felt", cursive; letter-spacing: 1px; fill: #868e96; }
+      .label { font: 19px "Comic Sans MS", "Marker Felt", cursive; fill: #1e1e1e; text-anchor: middle; }
+      .small { font: 15px "Comic Sans MS", "Marker Felt", cursive; fill: #495057; text-anchor: middle; }
+      .edge-label { font: 15px "Comic Sans MS", "Marker Felt", cursive; fill: #495057; text-anchor: middle; paint-order: stroke; stroke: #ffffff; stroke-width: 9px; stroke-linejoin: round; }
+      .node { stroke-width: 2.4; stroke-linejoin: round; }
+      .frame { fill: #fbf9ff; stroke: #7048e8; stroke-width: 2.8; stroke-linejoin: round; }
+      .neutral { fill: #f1f3f5; stroke: #495057; }
+      .primary { fill: #dbe4ff; stroke: #364fc7; }
+      .secondary { fill: #e5dbff; stroke: #7048e8; }
+      .warning { fill: #fff3bf; stroke: #e67700; }
+      .data { fill: #e3fafc; stroke: #0b7285; }
+      .success { fill: #d3f9d8; stroke: #2b8a3e; }
+      .arrow { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+      .arrow-primary { stroke: #364fc7; marker-end: url(#arrow-primary); }
+      .arrow-data { stroke: #0b7285; marker-end: url(#arrow-data); }
+      .arrow-success { stroke: #2b8a3e; marker-end: url(#arrow-success); }
+      .arrow-muted { stroke: #868e96; stroke-dasharray: 10 9; marker-end: url(#arrow-muted); }
+      .badge { fill: #ffffff; stroke: #364fc7; stroke-width: 2.2; }
+      .badge-text { font: 700 14px "Comic Sans MS", "Marker Felt", cursive; fill: #364fc7; text-anchor: middle; dominant-baseline: middle; }
+    </style>
+
+    <marker id="arrow-primary" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M1,1 L10,6 L1,11" fill="none" stroke="#364fc7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrow-data" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M1,1 L10,6 L1,11" fill="none" stroke="#0b7285" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrow-success" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M1,1 L10,6 L1,11" fill="none" stroke="#2b8a3e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrow-muted" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M1,1 L10,6 L1,11" fill="none" stroke="#868e96" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <rect class="canvas" width="3600" height="2280"/>
+  <text class="title" x="60" y="62">Enterprise RAG Query Flow</text>
+  <text class="subtitle" x="60" y="102">Both retrieval paths return evidence to the Query Orchestrator before grounded generation</text>
+
+  <!-- Request entry -->
+  <ellipse class="node neutral" cx="1800" cy="175" rx="110" ry="52"/>
+  <text class="label" x="1800" y="182">User</text>
+  <g transform="translate(1700 126)"><circle class="badge" r="17"/><text class="badge-text" y="1">1</text></g>
+
+  <rect class="node primary" x="1650" y="265" width="300" height="96" rx="26"/>
+  <text class="label" x="1800" y="320">API Gateway</text>
+  <g transform="translate(1670 249)"><circle class="badge" r="17"/><text class="badge-text" y="1">2</text></g>
+
+  <rect class="node warning" x="1650" y="405" width="300" height="96" rx="26"/>
+  <text class="label" x="1800" y="448">
+    <tspan x="1800">Auth</tspan>
+    <tspan class="small" x="1800" dy="23">identity + tenant context</tspan>
+  </text>
+  <g transform="translate(1670 389)"><circle class="badge" r="17"/><text class="badge-text" y="1">3</text></g>
+
+  <line class="arrow arrow-primary" x1="1800" y1="227" x2="1800" y2="261"/>
+  <line class="arrow arrow-primary" x1="1800" y1="361" x2="1800" y2="401"/>
+
+  <!-- Query Orchestrator semantic boundary -->
+  <rect class="frame" x="850" y="560" width="1900" height="1190" rx="34"/>
+  <text class="frame-title" x="900" y="610">QUERY ORCHESTRATOR</text>
+  <g transform="translate(865 545)"><circle class="badge" r="18"/><text class="badge-text" y="1">4</text></g>
+
+  <rect class="node secondary" x="1250" y="665" width="320" height="108" rx="28"/>
+  <text class="label" x="1410" y="726">Planner / Router</text>
+
+  <rect class="node primary" x="1750" y="665" width="320" height="108" rx="28"/>
+  <text class="label" x="1910" y="726">Tool Executor</text>
+
+  <rect class="node data" x="2250" y="665" width="320" height="108" rx="28"/>
+  <text class="label" x="2410" y="706">
+    <tspan x="2410">Execution State</tspan>
+    <tspan class="small" x="2410" dy="24">checkpoint / resume</tspan>
+  </text>
+
+  <rect class="node secondary" x="1620" y="1420" width="360" height="120" rx="30"/>
+  <text class="label" x="1800" y="1468">
+    <tspan x="1800">Evidence Fusion</tspan>
+    <tspan class="small" x="1800" dy="25">structured + document evidence</tspan>
+  </text>
+  <g transform="translate(1640 1404)"><circle class="badge" r="17"/><text class="badge-text" y="1">6</text></g>
+
+  <rect class="node primary" x="1620" y="1590" width="360" height="120" rx="30"/>
+  <text class="label" x="1800" y="1638">
+    <tspan x="1800">Context Builder</tspan>
+    <tspan class="small" x="1800" dy="25">budget + citations</tspan>
+  </text>
+  <g transform="translate(1640 1574)"><circle class="badge" r="17"/><text class="badge-text" y="1">7</text></g>
+
+  <line class="arrow arrow-primary" x1="1570" y1="719" x2="1746" y2="719"/>
+  <line class="arrow arrow-muted" x1="2070" y1="719" x2="2246" y2="719"/>
+  <line class="arrow arrow-primary" x1="1800" y1="1540" x2="1800" y2="1586"/>
+
+  <!-- Conversation state points to an internal orchestrator component. -->
+  <rect class="node data" x="1030" y="390" width="360" height="110" rx="28"/>
+  <text class="label" x="1210" y="434">
+    <tspan x="1210">Conversation Store</tspan>
+    <tspan class="small" x="1210" dy="24">history / previous turns</tspan>
+  </text>
+  <line class="arrow arrow-muted" x1="1270" y1="500" x2="1385" y2="661"/>
+  <line class="arrow arrow-primary" x1="1800" y1="501" x2="1455" y2="661"/>
+
+  <!-- Structured query tool -->
+  <text class="section" x="140" y="790">STRUCTURED QUERY PATH</text>
+  <rect class="node primary" x="140" y="830" width="520" height="100" rx="28"/>
+  <text class="label" x="400" y="887">Structured Query Service</text>
+  <g transform="translate(160 814)"><circle class="badge" r="19"/><text class="badge-text" y="1">5a</text></g>
+
+  <rect class="node data" x="140" y="970" width="520" height="100" rx="28"/>
+  <text class="label" x="400" y="1014">
+    <tspan x="400">Semantic Schema Catalog</tspan>
+    <tspan class="small" x="400" dy="23">tables · columns · relationships</tspan>
+  </text>
+
+  <rect class="node secondary" x="140" y="1110" width="520" height="100" rx="28"/>
+  <text class="label" x="400" y="1167">Text → SQL</text>
+
+  <rect class="node warning" x="140" y="1250" width="520" height="100" rx="28"/>
+  <text class="label" x="400" y="1294">
+    <tspan x="400">SQL Validation</tspan>
+    <tspan class="small" x="400" dy="23">allow-list + read-only</tspan>
+  </text>
+
+  <rect class="node data" x="140" y="1420" width="520" height="100" rx="28"/>
+  <text class="label" x="400" y="1464">
+    <tspan x="400">PostgreSQL</tspan>
+    <tspan class="small" x="400" dy="23">rows + provenance</tspan>
+  </text>
+
+  <line class="arrow arrow-primary" x1="1750" y1="750" x2="664" y2="870"/>
+  <line class="arrow arrow-data" x1="400" y1="930" x2="400" y2="966"/>
+  <line class="arrow arrow-data" x1="400" y1="1070" x2="400" y2="1106"/>
+  <line class="arrow arrow-primary" x1="400" y1="1210" x2="400" y2="1246"/>
+  <line class="arrow arrow-primary" x1="400" y1="1350" x2="400" y2="1416"/>
+  <line class="arrow arrow-success" x1="660" y1="1470" x2="1616" y2="1480"/>
+  <text class="edge-label" x="1110" y="1460">structured evidence</text>
+
+  <!-- Unstructured document retrieval tool -->
+  <text class="section" x="2940" y="790">DOCUMENT RETRIEVAL PATH</text>
+  <rect class="node primary" x="2940" y="830" width="520" height="100" rx="28"/>
+  <text class="label" x="3200" y="887">Document Retrieval Service</text>
+  <g transform="translate(2960 814)"><circle class="badge" r="19"/><text class="badge-text" y="1">5b</text></g>
+
+  <rect class="node secondary" x="2940" y="970" width="520" height="100" rx="28"/>
+  <text class="label" x="3200" y="1027">Query embedding</text>
+
+  <rect class="node data" x="2940" y="1110" width="520" height="100" rx="28"/>
+  <text class="label" x="3200" y="1154">
+    <tspan x="3200">OpenSearch</tspan>
+    <tspan class="small" x="3200" dy="23">tenant-filtered hybrid index</tspan>
+  </text>
+
+  <rect class="node neutral" x="2940" y="1250" width="230" height="90" rx="26"/>
+  <text class="label" x="3055" y="1301">BM25</text>
+
+  <rect class="node secondary" x="3230" y="1250" width="230" height="90" rx="26"/>
+  <text class="label" x="3345" y="1301">Vector</text>
+
+  <rect class="node warning" x="2940" y="1380" width="520" height="96" rx="28"/>
+  <text class="label" x="3200" y="1435">Fusion / RRF</text>
+
+  <rect class="node success" x="2940" y="1515" width="520" height="100" rx="28"/>
+  <text class="label" x="3200" y="1559">
+    <tspan x="3200">Reranker</tspan>
+    <tspan class="small" x="3200" dy="23">chunks + scores + citations</tspan>
+  </text>
+
+  <line class="arrow arrow-primary" x1="2070" y1="750" x2="2936" y2="870"/>
+  <line class="arrow arrow-primary" x1="3200" y1="930" x2="3200" y2="966"/>
+  <line class="arrow arrow-data" x1="3200" y1="1070" x2="3200" y2="1106"/>
+  <line class="arrow arrow-data" x1="3170" y1="1210" x2="3070" y2="1246"/>
+  <line class="arrow arrow-data" x1="3230" y1="1210" x2="3330" y2="1246"/>
+  <line class="arrow arrow-primary" x1="3055" y1="1340" x2="3160" y2="1376"/>
+  <line class="arrow arrow-primary" x1="3345" y1="1340" x2="3240" y2="1376"/>
+  <line class="arrow arrow-primary" x1="3200" y1="1476" x2="3200" y2="1511"/>
+  <line class="arrow arrow-success" x1="2940" y1="1565" x2="1984" y2="1490"/>
+  <text class="edge-label" x="2465" y="1513">document evidence</text>
+
+  <!-- Grounded generation after the internal Context Builder -->
+  <rect class="node secondary" x="1620" y="1840" width="360" height="105" rx="28"/>
+  <text class="label" x="1800" y="1884">
+    <tspan x="1800">LLM Gateway</tspan>
+    <tspan class="small" x="1800" dy="24">grounded generation</tspan>
+  </text>
+  <g transform="translate(1640 1824)"><circle class="badge" r="17"/><text class="badge-text" y="1">8</text></g>
+
+  <rect class="node warning" x="1620" y="1990" width="360" height="105" rx="28"/>
+  <text class="label" x="1800" y="2034">
+    <tspan x="1800">Answer / Citation Validator</tspan>
+    <tspan class="small" x="1800" dy="24">verify grounding + sources</tspan>
+  </text>
+  <g transform="translate(1640 1974)"><circle class="badge" r="17"/><text class="badge-text" y="1">9</text></g>
+
+  <ellipse class="node success" cx="1800" cy="2200" rx="110" ry="52"/>
+  <text class="label" x="1800" y="2207">User</text>
+  <g transform="translate(1700 2151)"><circle class="badge" r="19"/><text class="badge-text" y="1">10</text></g>
+
+  <line class="arrow arrow-primary" x1="1800" y1="1710" x2="1800" y2="1836"/>
+  <line class="arrow arrow-primary" x1="1800" y1="1945" x2="1800" y2="1986"/>
+  <line class="arrow arrow-success" x1="1800" y1="2095" x2="1800" y2="2144"/>
+  <text class="edge-label" x="1915" y="2130">answer + sources</text>
+</svg>

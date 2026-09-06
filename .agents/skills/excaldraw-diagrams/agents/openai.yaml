@@ -1,0 +1,5 @@
+interface:
+  display_name: "Excaldraw Diagrams"
+  short_description: "Create polished editable Excalidraw diagrams"
+  brand_color: "#7048E8"
+  default_prompt: "Use $excaldraw-diagrams to create a polished, editable Excalidraw diagram from my description."
