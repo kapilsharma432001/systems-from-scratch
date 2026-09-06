@@ -111,3 +111,46 @@ Question -> Find the relevant schemas -> Generate SQL -> Validate SQL -> Execute
   }
 ]
 ```
+
+###### Path of Unstructured Query Service
+
+The flow of retrieval in the case of an unstructured query would be like this:
+
+```text
+Question -> question embedding (we are converting the question into an embedding here) -> metadata filtering -> hybrid search (keyword + semantic search) -> RRF / score fusion -> Top ~30 chunks -> Reranker -> Top ~5–10 chunks
+```
+
+**Why hybrid search?**
+
+- Vector search is good for finding data based on meaning and context rather than exact word matches.
+- But keyword search is good for discovering exact words and phrases.
+  - For example, keyword search would be good for customer IDs (like `C001` and `C002`—because it wouldn't make any sense to use vector search), errors like `AUTH_928`, and products like iPhone 15—all these things wouldn't make much sense to search for using vector search; therefore, keyword search plays an important role here.
+  - After BM25 (keyword search) + vector search -> we combine the results using RRF (reciprocal rank fusion) -> then use a reranker.
+- It's stronger than vector-only retrieval.
+
+**What is metadata filtering?**
+
+- Metadata filtering means restricting the searchable chunks, before or during vector/keyword search, using non-vector fields attached to each chunk.
+- Example chunk stored in OpenSearch:
+
+```json
+{
+  "text": "customer reported a delay during onboarding.",
+  "embedding": [...],
+  "tenant_id": "T1",
+  "customer_id": "C101",
+  "document_type": "complaint",
+  "region": "India",
+  "document_id": "DOC-102",
+  "year": 2026
+}
+```
+
+- Now, if the question is: Show onboarding complaints for customer `C101` from the year 2026.
+  - Here, instead of searching all chunks, we apply filters like:
+    - `tenant_id`
+    - `customer_id`
+    - `year`
+  - Then, run keyword/vector search only on the allowed subset.
+
+**So, metadata filtering will be important for security (tenant A would never search tenant B's data), accuracy (avoids irrelevant chunks), and speed (reduces the search space).**
