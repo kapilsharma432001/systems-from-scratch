@@ -154,3 +154,127 @@ Question -> question embedding (we are converting the question into an embedding
   - Then, run keyword/vector search only on the allowed subset.
 
 **So, metadata filtering will be important for security (tenant A would never search tenant B's data), accuracy (avoids irrelevant chunks), and speed (reduces the search space).**
+
+###### Reranking of Returned Chunks
+
+- Vector search might return 30 chunks.
+- But this stage is optimised for speed.
+
+```text
+User Query -> BM25 + vector search -> Top 30 candidates
+```
+
+- Those 30 are "probably relevant," but their order may not be perfect.
+- Then the reranker scores each carefully:
+
+```text
+Query + chunk 1 -> score 0.93
+Query + chunk 2 -> score 0.41
+Query + chunk 3 -> score 0.88
+...
+```
+
+- Then we sort by score and keep only the top 7 chunks (`top-k` chunks).
+- The most common reranker is a cross-encoder reranker.
+- This is how a cross-encoder reranker works:
+
+![Cross-Encoder Reranker](cross-encoder-reranker-working.png)
+
+- A cross-encoder takes the **query and the chunk together** as one input and outputs a relevance score:
+
+```text
+[query] + [candidate chunk]
+```
+
+- A cross-encoder reranker is still a language model, usually a smaller transformer model. It's just not a large generative LLM like GPT/Claude.
+- A cross-encoder is a small transformer trained specifically for relevance scoring. It jointly processes the query and candidate chunk using attention and outputs a relevance score instead of generating text, which is why it can rerank retrieved chunks more accurately.
+  - "Using attention" in the above statement means that it can directly compare words/tokens in the query with the words/tokens in the chunk and learn which parts are related.
+
+###### Context Builder
+
+- Once we have evidence, we should not simply dump everything into the LLM.
+- The context builder decides:
+  - Which evidence to include
+  - What to remove
+  - Which conversation history to include (include relevant history)
+  - Source/citation IDs
+  - How to format everything into a clean prompt
+
+###### LLM Gateway
+
+- The context builder sends that prompt to the LLM gateway.
+- The gateway then calls Amazon Bedrock, OpenAI, or another model.
+- This same gateway could also be used for the following (possibly with different models):
+  - Query planning (planner/executor of the query orchestrator)
+  - Text-to-SQL (in the structured query path)
+  - Final response generation (through the LLM gateway in the end)
+
+- Before returning the response, we have to validate it using a **validator**, which will check whether any sensitive information is exposed, whether there is sufficient evidence, whether the response format is valid, etc.
+  - If the evidence is insufficient, we can return, "I couldn't find enough evidence to answer confidently." This is better than hallucinating.
+
+###### Conversation Memory
+
+- It could be a NoSQL store.
+- It stores full message history, recent messages, summaries of old messages, important entities, etc.
+
+###### What if the Agent Server Crashes?
+
+- This is a very important applied AI question.
+- Don't store the agent execution state only inside Python's memory.
+- We have to persist the following in PostgreSQL/DynamoDB:
+  - Execution ID
+  - Plan
+  - Completed steps
+  - Tool results
+  - Current step
+
+- For example, the agent is running, planning is completed, and the structured query is completed, but it fails at document retrieval.
+- When another ECS task starts:
+  - It can load the checkpoint
+  - It can recognize that the structured query is already completed
+  - It can resume from document retrieval
+
+###### Scaling the Query System (How to Scale Different Parts of Our Architecture)
+
+1. Query Orchestrator
+   - Run multiple stateless ECS Fargate tasks behind a load balancer
+   - Scale based on:
+     - Memory
+     - CPU
+     - Latency
+     - Requests/sec
+
+2. PostgreSQL
+   - Use:
+     - Read replicas
+     - Indexing
+     - Connection pooling
+     - Caching
+
+3. OpenSearch
+   - For millions/billions of vectors:
+     - HNSW ANN (approximate nearest neighbour) indexes
+     - Sharding
+     - Tenant filtering
+     - Metadata filtering
+
+4. LLM
+   - Control:
+     - Concurrency
+     - Rate limits
+     - Retries
+     - Caching
+     - Fallback models
+
+###### Evaluation (Very Important Applied AI Follow-Up)
+
+- Don't just evaluate the final answer.
+- Evaluate: routing (planning and routing) -> SQL -> retrieval -> reranking -> final answer.
+- These could be the important metrics:
+
+![Evaluation Metrics](evaluation-metrics.png)
+
+- We need to use:
+  - Deterministic evaluation
+  - LLM-as-a-judge
+  - Human evaluation
