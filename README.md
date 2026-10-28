@@ -105,7 +105,6 @@ systems-from-scratch/
 │   │   ├── 003-RAG-systems-prerequisites.md
 │   │   ├── 03-RAG-System.md
 │   │   ├── 03.1-RAG-System-Evaluation.md
-│   │   ├── script.md
 │   │   └── images/
 │   └── 04-event-driven-architecture/
 │       ├── 04-an-event-driven-architecture.md

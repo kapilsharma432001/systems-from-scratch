@@ -6,7 +6,7 @@ We need to start building systems that repeatedly teach the core patterns: API d
 
 - [URL Shortener](01-url-shortener/)
 - [Rate Limiter](02-rate-limiter/)
-- [RAG System](03-rag-system/) — prerequisites, system design, evaluation, and script notes.
+- [RAG System](03-rag-system/) — prerequisites, system design, and evaluation.
 - [Event-Driven Architecture](04-event-driven-architecture/)
 
 For each new system, create the next numbered folder, such as `05-notification-system/`, and keep its Markdown notes inside it. Add an `images/` directory when diagrams are needed. The folder numbers track the order notes are added; the learning roadmap below remains the recommended study order. Shared diagrams belong in `assets/`.
