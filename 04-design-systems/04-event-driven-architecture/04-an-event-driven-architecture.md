@@ -1,6 +1,6 @@
 # Event-Driven Architecture
 
-![A simple event driven architecture](image-11.png)
+![A simple event driven architecture](images/image-11.png)
 
 - The entire system is not event-driven. The producer is **schedule-driven** because EventBridge Scheduler invokes the worker every 15 minutes.
 - From SQS to the Notifo Lambda function, the pipeline becomes event-driven.
@@ -156,7 +156,7 @@ SQS -> Notifo Lambda -> SES
 - Because Notifo Lambda consumes messages from SQS, Lambda can process multiple messages concurrently and scale the number of concurrent executions.
 - Therefore, Worker Lambda and Notifo Lambda can scale independently.
 
-![Concurrent Lambda executions](image-12.png)
+![Concurrent Lambda executions](images/image-12.png)
 
 #### Differences Between Standard and FIFO Queues
 

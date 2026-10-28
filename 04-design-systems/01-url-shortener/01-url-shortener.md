@@ -16,7 +16,7 @@ Short URL:
 https://short.ly/abc123
 ```
 
-![Delivery Framework](image.png)
+![Delivery Framework](../assets/image.png)
 
 ### 1. Functional Requirements
 
@@ -37,7 +37,7 @@ Out of scope:
 - The system should be highly available - 99.99% of the time (availability > consistency)
 - The system should support 1B shortened URLs and 100M DAU
 
-![Requirements](image-1.png)
+![Requirements](images/image-1.png)
 
 ### 3. Core Entities
 
@@ -79,7 +79,7 @@ GET /{short_code}
 
 - We can have a table called `url_mappings` with columns like `short_code`, `long_url`, `is_active`, `user_id`, `created_at`, and `expires_at`.
 
-![DATABASE SCHEMA OF SHORT URL](image-2.png)
+![DATABASE SCHEMA OF SHORT URL](images/image-2.png)
 
 ### 5. High-Level Design
 
@@ -90,7 +90,7 @@ GET /{short_code}
 - In a URL shortener, the main algorithmic question is: how do we generate a short code that is unique, small, and fast to create?
 - We usually do not directly convert the long URL into a short URL. We first generate the short code, store it in a database, and map it to the long URL.
 
-![example of short code generation](image-3.png)
+![example of short code generation](images/image-3.png)
 
 ```text
 long_url
@@ -122,7 +122,7 @@ return https://short.ly/{short_code}
 - This helps make the short code shorter.
 - Why Base62? Because it gives many combinations with fewer characters.
 
-![Why Base62?](image-4.png)
+![Why Base62?](images/image-4.png)
 
 - The flow would be to generate a unique number using a Redis atomic counter, database auto-increment ID, database sequence, etc., and then run `base62(unique_id)`. This gives us a unique short code.
 - This makes sure that two records cannot have the same short code.
@@ -145,7 +145,7 @@ return https://short.ly/{short_code}
 - Now our short URL is live, and users can access the original URL by using the shortened URL.
 - Importantly, the short URL exists at a domain we own. For example, if our site is located at `short.ly`, then our short URLs look like `short.ly/abc123`, and all requests to that short URL go to our primary server.
 
-![Redirect to original URL](image-5.png)
+![Redirect to original URL](images/image-5.png)
 
 - There are two types of requests to our server:
   1. `POST /urls`: Generates a short URL.
@@ -164,7 +164,7 @@ return https://short.ly/{short_code}
 - One way to guarantee that there are no collisions is to increment a counter for each new URL. We can take the output of the counter and encode it using Base62 encoding to make it compact.
 - **Redis is particularly well-suited for managing this counter because it is single-threaded and supports atomic operations. An atomic operation either completes entirely or does not complete at all. Because Redis is single-threaded, it processes one command at a time, eliminating race conditions. Its `INCR` command atomically increments the counter and returns the new value in a single operation.**
 
-![Counter with Base62 encoding](image-6.png)
+![Counter with Base62 encoding](images/image-6.png)
 
 #### 2. How can we ensure that redirects are fast?
 
@@ -173,7 +173,7 @@ return https://short.ly/{short_code}
 - The cache stores frequently accessed mappings of short codes to long URLs.
 - When a redirect request comes in, the server checks the cache first. If the short code is found in the cache, the server retrieves the long URL from the cache, significantly reducing latency. If it is not found (cache miss), the server queries the database and stores the result in the cache for future requests.
 
-![In-memory cache](image-7.png)
+![In-memory cache](images/image-7.png)
 
 #### 3. How can we scale to support 1B shortened URLs and 100M DAU?
 
@@ -192,4 +192,4 @@ return https://short.ly/{short_code}
 
 - This introduces a microservices architecture where the Read Service handles redirects while the Write Service handles the creation of new short URLs. This separation allows us to scale each service independently based on its specific demands.
 
-![Final Design](image-8.png)
+![Final Design](images/image-8.png)
