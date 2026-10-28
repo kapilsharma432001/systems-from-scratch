@@ -12,7 +12,7 @@
 
 - We won't make ingestion very complex and we will keep it simple.
 
-![File Ingestion Pipeline Architecture](<File Ingestion Pipeline.png>)
+![File Ingestion Pipeline Architecture](<images/File Ingestion Pipeline.png>)
 
 - The flow could be something like this:
 
@@ -80,4 +80,4 @@ def lambda_handler(event):
 
 - At large scales, parsing, embedding generation, etc., can be handled by separate workers.
 
-![File Ingestion Pipeline Architecture](<../drawio-architecture-diagrams/File Ingestion Pipeline.png>)
+![File Ingestion Pipeline Architecture](<../../drawio-architecture-diagrams/File Ingestion Pipeline.png>)

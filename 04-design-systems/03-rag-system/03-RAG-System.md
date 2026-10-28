@@ -56,8 +56,8 @@ Internally the orchestrator is going to interact with 3 main tools:
 
 #### High-Level Design
 
-![Enterprise RAG Query Flow](<../excalidraw-architecture-diagrams/Enterprise RAG Query Flow.svg>)
-![Architecture Diagram](<../drawio-architecture-diagrams/RAG Query Architecture.png>)
+![Enterprise RAG Query Flow](<../../excalidraw-architecture-diagrams/Enterprise RAG Query Flow.svg>)
+![Architecture Diagram](<../../drawio-architecture-diagrams/RAG Query Architecture.png>)
 
 ##### Query Flow
 
@@ -88,7 +88,7 @@ Question -> Find the relevant schemas -> Generate SQL -> Validate SQL -> Execute
 
 - Finding relevant database schemas means that we don't send the schemas of all 500 tables to the LLM. Instead, we need to maintain a **semantic schema catalog**:
 
-  ![Semantic Schema Catalog](semantic-schema-catalog.png)
+  ![Semantic Schema Catalog](images/semantic-schema-catalog.png)
 
 - Now, if there is a question, we need to convert that question into an embedding -> then find relevant tables and their columns and send them to the LLM to generate the SQL for us.
 - But we do not want to execute that generated SQL directly. We need to validate that SQL:
@@ -178,7 +178,7 @@ Query + chunk 3 -> score 0.88
 - The most common reranker is a cross-encoder reranker.
 - This is how a cross-encoder reranker works:
 
-![Cross-Encoder Reranker](cross-encoder-reranker-working.png)
+![Cross-Encoder Reranker](images/cross-encoder-reranker-working.png)
 
 - A cross-encoder takes the **query and the chunk together** as one input and outputs a relevance score:
 
@@ -272,7 +272,7 @@ Query + chunk 3 -> score 0.88
 - Evaluate: routing (planning and routing) -> SQL -> retrieval -> reranking -> final answer.
 - These could be the important metrics:
 
-![Evaluation Metrics](evaluation-metrics.png)
+![Evaluation Metrics](images/evaluation-metrics.png)
 
 - We need to use:
   - Deterministic evaluation

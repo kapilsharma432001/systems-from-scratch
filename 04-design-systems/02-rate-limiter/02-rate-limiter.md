@@ -90,7 +90,7 @@ or something like `isRequestAllowed(client_id, rule_id, current_time) -> { passe
 
 - A good solution could be here is to have another microservice, so if any request is coming to any microservice, it will need an additional network round trip which would be to rate-limiter service.
 
-![Rate Limiter - Keeping another service for it](image-9.png)
+![Rate Limiter - Keeping another service for it](images/image-9.png)
 
 It's a good design but there are certain challenges around it:
 
@@ -104,7 +104,7 @@ It's a good design but there are certain challenges around it:
 - Every incoming request hits the rate limiter first, before it reaches any of your application servers. The rate limiter examines the request (checking IP address, user authentication header, API keys), applies the appropriate limits, and either forwards the request to downstream services or immediately returns an HTTP 429 response.
 - This is the most popular approach, conceptually simpler and provides strong protection. Your application servers never see blocked requests, so they can focus entirely on processing legitimate traffic.
 
-![API Gateway Rate Limiter](image-10.png)
+![API Gateway Rate Limiter](images/image-10.png)
 
 -> But there are certain limitations with it:
 

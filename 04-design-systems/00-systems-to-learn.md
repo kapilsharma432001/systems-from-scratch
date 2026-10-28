@@ -2,6 +2,15 @@
 
 We need to start building systems that repeatedly teach the core patterns: API design, schema design, caching, queues, sharding, fan-out, idempotency, consistency, contention, search, and observability.
 
+## Current System Folders
+
+- [URL Shortener](01-url-shortener/)
+- [Rate Limiter](02-rate-limiter/)
+- [RAG System](03-rag-system/) — prerequisites, system design, evaluation, and script notes.
+- [Event-Driven Architecture](04-event-driven-architecture/)
+
+For each new system, create the next numbered folder, such as `05-notification-system/`, and keep its Markdown notes inside it. Add an `images/` directory when diagrams are needed. The folder numbers track the order notes are added; the learning roadmap below remains the recommended study order. Shared diagrams belong in `assets/`.
+
 ## Learning Order
 
 Here is the order that we are going to follow:
@@ -21,8 +30,8 @@ Here is the order that we are going to follow:
 
 ## Eight Most Important Systems
 
-- `01-url-shortener.md`
-- `02-rate-limiter.md`
+- [URL Shortener](01-url-shortener/01-url-shortener.md)
+- [Rate Limiter](02-rate-limiter/02-rate-limiter.md)
 - `03-notification-system.md`
 - `04-file-storage-system.md`
 - `05-news-feed.md`
@@ -51,4 +60,4 @@ Here is the order that we are going to follow:
 ## Delivery Framework to Follow
 - This is the delivery framework we are going to follow in each and every problem that we are going to take.
 - Requirements -> Core Entities -> API or Interface -> Data flow -> High-Level Design -> Deep Dives
-![Delivery Framework](image.png)
+![Delivery Framework](assets/image.png)

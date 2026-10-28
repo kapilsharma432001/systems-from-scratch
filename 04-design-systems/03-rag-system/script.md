@@ -1,8 +1,8 @@
 Intro
     - We will cover :-
         - what does it mean by golden dataset
-        - deterministic evaluation, 
-        - LLM-as-a-judge and 
+        - deterministic evaluation,
+        - LLM-as-a-judge and
         - RAGAS
     - What RAG evaluation is? RAG evaluation is the process of measuring how well a RAG system retrieves the right information and uses it to generate a correct, relevant, and grounded answer.
     - Most important thing is we do not only evaluate the final answer, we eveluate our RAG pipeline at different stages.

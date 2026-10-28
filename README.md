@@ -93,12 +93,23 @@ systems-from-scratch/
 │
 ├── 04-design-systems/
 │   ├── 00-systems-to-learn.md
-│   ├── 003-RAG-systems-prerequisites.md
-│   ├── 01-url-shortener.md
-│   ├── 02-rate-limiter.md
-│   ├── 03-RAG-System.md
-│   ├── 04-an-event-driven-architecture.md
-│   └── *.png
+│   ├── assets/
+│   │   └── image.png
+│   ├── 01-url-shortener/
+│   │   ├── 01-url-shortener.md
+│   │   └── images/
+│   ├── 02-rate-limiter/
+│   │   ├── 02-rate-limiter.md
+│   │   └── images/
+│   ├── 03-rag-system/
+│   │   ├── 003-RAG-systems-prerequisites.md
+│   │   ├── 03-RAG-System.md
+│   │   ├── 03.1-RAG-System-Evaluation.md
+│   │   ├── script.md
+│   │   └── images/
+│   └── 04-event-driven-architecture/
+│       ├── 04-an-event-driven-architecture.md
+│       └── images/
 │
 └── drawio-architecture-diagrams/
     ├── File Ingestion Pipeline.drawio
@@ -154,11 +165,11 @@ part of the learning sequence.
 ### 04 - Design Systems
 
 - [Systems to Learn](04-design-systems/00-systems-to-learn.md)
-- [RAG System Prerequisites and Ingestion Pipeline](04-design-systems/003-RAG-systems-prerequisites.md)
-- [URL Shortener](04-design-systems/01-url-shortener.md)
-- [Rate Limiter](04-design-systems/02-rate-limiter.md)
-- [RAG System](04-design-systems/03-RAG-System.md)
-- [Event-Driven Architecture](04-design-systems/04-an-event-driven-architecture.md)
+- [RAG System Prerequisites and Ingestion Pipeline](04-design-systems/03-rag-system/003-RAG-systems-prerequisites.md)
+- [URL Shortener](04-design-systems/01-url-shortener/01-url-shortener.md)
+- [Rate Limiter](04-design-systems/02-rate-limiter/02-rate-limiter.md)
+- [RAG System](04-design-systems/03-rag-system/03-RAG-System.md)
+- [Event-Driven Architecture](04-design-systems/04-event-driven-architecture/04-an-event-driven-architecture.md)
 
 ### Architecture Diagrams
 
